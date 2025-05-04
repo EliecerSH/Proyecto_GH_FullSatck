@@ -10,16 +10,16 @@ function App() {
   return (
       <>
         <h1>KURITSU</h1>
-        <div id="container">
-          <div>
+        <div className='container'>
+          <div className='card'>
             <Apart_app></Apart_app>
             {/* Aquí puedes poner el clima, calendario, etc. */}
           </div>
-          <div>
+          <div className='card'>
             <Notas></Notas>
             {/* Aquí puedes poner botones, links, etc. */}
           </div>
-          <div>
+          <div className='card'>
             <Apart_info></Apart_info>
             {/* Aquí puedes poner botones, links, etc. */}
           </div>

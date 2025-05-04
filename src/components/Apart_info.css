@@ -1,12 +1,17 @@
 #daily-info {
-    background-color: #e5e7eb; /* gris claro */
+    background-color: #f8f8f8; /* gris claro */
     padding: 0.7rem;
     border-radius: 0.75rem; /*redondeo de puntas*/
-    width: 100%;
-    max-width: 350px; /*tamano de ancho*/
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /*sombreado*/
     font-family: sans-serif; /*tipografia*/
     font-size: 1rem;
     font-weight: bold;
     margin-bottom: 1rem;
+    color: black;
+
+    h1 {
+      font-style: normal;
+      color: rgb(0, 0, 0);
+      font-size: 1rem;
+    }
   }
