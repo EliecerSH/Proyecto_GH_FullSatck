@@ -4,11 +4,11 @@ h1 {
   margin-bottom: 1rem;
   font-family: sans-serif;
 }
+
 .container {
   display: flex;
   gap: 3rem;
   padding: 0.3rem;
-  width: 100%;
 }
 
 .container1{
@@ -18,7 +18,15 @@ h1 {
   border-radius: 0.75rem;
   font-size: 1rem;
   margin-bottom: 0.3rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
 }
+
+.container2 {
+  display: flex;
+}
+
 
 .card {
   flex: 1;
@@ -30,7 +38,7 @@ h1 {
   width: 30px;
   height: 30px;
   color: rgb(0, 0, 0);
-  background-color: rgb(228, 90, 90);
+  background-color: rgb(228, 118, 90);
   border-radius: 0.3rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }

@@ -24,10 +24,31 @@ function App () {
   }
 
   return (
-    <div id="daily-info"style={{ position: "relative", height: "auto", width: "100%",}}>
+    <div id="daily-info"style={{ position: "relative", height: "auto", width: "100%"}}>
         <div>
             <div>
-                <h2>NOTAS</h2>
+                <h1>NOTAS</h1>
+                <div>
+                    <input
+                        type="text"
+                        id="title"
+                        placeHolder="titulo"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                    ></input>
+                    <input
+                        type="text"
+                        id="description"
+                        placeholder="descripción"
+                        value={des}
+                        onChange={(e) => {
+                            setDes(e.target.value);
+                        }}
+                    ></input>
+                    <button type="submit" onClick={handle}>
+                        Agregar
+                    </button>
+                </div>
             </div>
             <div>
                 {notes.map((e) => (
@@ -43,28 +64,6 @@ function App () {
                         </button>
                     </div>
                 ))}
-                <div>
-                    <h3>Add Notes</h3>
-                    <input
-                        type="text"
-                        id="title"
-                        placeHolder="Add title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                    ></input>
-                    <input
-                        type="text"
-                        id="description"
-                        placeholder="Notes"
-                        value={des}
-                        onChange={(e) => {
-                            setDes(e.target.value);
-                        }}
-                    ></input>
-                    <button type="submit" onClick={handle}>
-                        Submit
-                    </button>
-                </div>
             </div>
         </div>
     </div>

@@ -4,12 +4,13 @@ import Apart_info from './components/Apart_info'
 import Apart_app from './components/Apart_app';
 import Notas from './components/Notas';
 import { Container } from 'postcss';
+import logopng from './assets/kouritsu_title.png'
 
 function App() {
 
   return (
       <>
-        <h1>KURITSU</h1>
+      <img src={logopng} alt="" width="15%"/>
         <div className='container'>
           <div className='card'>
             <Apart_app></Apart_app>
