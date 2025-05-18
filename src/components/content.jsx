@@ -1,10 +1,14 @@
 import React from 'react'
-import ContentHeader from './ContentHeader.jsx'
+import ContentHeader from './contentHeader.jsx'
+import Card from './Card.jsx';
+import '../styles/Content.css'
 
 const Content = () => {
   return (
     <div className='content'>
-        <ContentHeader/>
+
+     <div className='header'><ContentHeader/></div>
+      <div className='cardss'></div><Card/>
     </div>
   );
 };

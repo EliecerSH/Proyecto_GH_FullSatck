@@ -1,17 +1,16 @@
-import { useState } from 'react';
-import './App.css'
+import React, { useState } from "react";
 import Sidebar from './components/Sidebar';
-import Content from './components/content';
+import Content from './components/content.jsx';
+import './App.css';
 
-function App() {
+
+const App = () => {
   return (
-   <div className='dashboard'>
-      <Sidebar/>
-      <div className='dashboard-content'>
-          <Content/>
-      </div>
-   </div> 
-    );
-}
+  <div className="dashboard">
+        <Sidebar /> {}
+        <Content /> {}
+  </div>
+ );
+};
 
-export default App
+export default App;
