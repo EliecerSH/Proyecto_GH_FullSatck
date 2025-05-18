@@ -1,5 +1,5 @@
 import { useState } from "react";
-import './Apart_info.css';
+import '../styles/Apart_info.css';
 
 function App () {
   const [title, setTitle] = useState("");
