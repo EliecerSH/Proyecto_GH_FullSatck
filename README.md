@@ -1,6 +1,6 @@
 # Kouritsu
 
-This is a College project abaout a multipurpose Web with React and a littleo of Tailwind CSS
+This is a College project abaout a multipurpose Web with React and a little of Tailwind CSS
 
 ## Run
 
