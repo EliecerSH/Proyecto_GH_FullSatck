@@ -1,6 +1,7 @@
 import './Apart_info.css'
 import '../App.css'
 import editpng from '../assets/editar_icon.png'
+import WeatherApp from './WeatherApp'
 
 function Apart_info(){
     return(
@@ -9,6 +10,7 @@ function Apart_info(){
                 <h1>APLICACIONES</h1>
                 <img src={editpng} alt="" width="30px" height="30px"/>
             </div>
+            <WeatherApp></WeatherApp>
         </div>
     )
 }
