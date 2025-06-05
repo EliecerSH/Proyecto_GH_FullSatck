@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Pokemon.css";
+import sersh from './pokemon_assets/search.png'
 
 const Pokemon = () => {
   const [search, setSearch] = useState("");
@@ -32,14 +33,14 @@ const Pokemon = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <button type="submit"><b /></button>
+        <button type="submit">< img src={sersh} alt=""/></button>
       </form>
 
       {error && <p className="error">{error}</p>}
 
       {pokemon && (
         <div className="pokemon-card">
-          <div className="container2">
+          <div className="container23">
             <img src={pokemon.sprites.front_default} alt={pokemon.name} />
             <h2>{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h2>
             <p>Tipo: {pokemon.types.map(t => t.type.name).join(", ")}</p>
