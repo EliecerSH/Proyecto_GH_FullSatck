@@ -5,7 +5,7 @@ import Apart_app from './components/Apart_app';
 import Notas from './components/Notas';
 import { Container } from 'postcss';
 import logopng from './assets/cute.webp'
-import Apli_calculo from './components/Aplicaciones/Calculo/Apli_calculo';
+import Menu_info from './components/menu_info';
 
 function App() {
 
@@ -25,8 +25,7 @@ function App() {
             {/* Aquí puedes poner botones, links, etc. */}
           </div>
           <div className='card'>
-            <Apart_info></Apart_info>
-            {/* Aquí puedes poner botones, links, etc. */}
+            <Menu_info></Menu_info>
           </div>
         </div>
       </>
