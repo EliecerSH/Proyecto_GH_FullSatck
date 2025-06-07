@@ -9,14 +9,14 @@ const NotesList = ({
 }) => {
 	return (
 		<div className='notes-list'>
-			{notes.map((note) => (
-				<Note
-					id={note.id}
-					text={note.text}
-					date={note.date}
-					handleDeleteNote={handleDeleteNote}
-				/>
-			))}
+			{[...notes].reverse().map((Note) => (
+		<Note
+			key={Note.id}
+			id={Note.id}
+			text={Note.text}
+			date={Note.date}
+			handleDeleteNote={handleDeleteNote}/>
+	   ))}
 			<AddNote handleAddNote={handleAddNote} />
 		</div>
 	);

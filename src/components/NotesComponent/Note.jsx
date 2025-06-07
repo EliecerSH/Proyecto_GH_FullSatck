@@ -3,9 +3,9 @@ import '../../styles/Notes.css';
 
 const Note = ({ id, text, date, handleDeleteNote }) => {
 	return (
-		<div className='note'>
+		<div className="note">
 			<span>{text}</span>
-			<div className='note-footer'>
+			<div className="note-footer">
 				<small>{date}</small>
 				<MdDeleteForever
 					onClick={() => handleDeleteNote(id)}
@@ -17,4 +17,6 @@ const Note = ({ id, text, date, handleDeleteNote }) => {
 	);
 };
 
+
 export default Note;
+

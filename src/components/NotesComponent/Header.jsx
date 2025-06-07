@@ -5,7 +5,7 @@ import '../../styles/Notes.css';
 const Header = ({ handleToggleDarkMode }) => {
 	return (
 		<div className='header'>
-			<h1>Notas</h1>
+			<h1>Notes</h1>
 		</div>
 	);
 };

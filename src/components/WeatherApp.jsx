@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/WeatherApp.css'; // Estilos opcionales (ver más abajo)
+import '../styles/WeatherApp.css'; 
 
 const WeatherApp = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [city, setCity] = useState('Madrid'); // Ciudad por defecto
+  const [city, setCity] = useState('Madrid'); 
 
-  // Configura tu API key (regístrate en https://openweathermap.org/api para obtener una gratis)
-  const API_KEY = '8ca75a3b2a9c719eb2bc674541c9c455'; // Reemplaza esto
+  const API_KEY = '8ca75a3b2a9c719eb2bc674541c9c455'; 
   const API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=es&appid=${API_KEY}`;
 
   useEffect(() => {
@@ -26,8 +25,8 @@ const WeatherApp = () => {
     fetchWeather();
   }, [city]);
 
-  if (loading) return <div className="weather-loading">Cargando clima...</div>;
-  if (!weatherData) return <div className="weather-error">Error al cargar datos</div>;
+  if (loading) return <div className="weather-loading">loading the weather...</div>;
+  if (!weatherData) return <div className="weather-error">error</div>;
 
   return (
     <div className="weather-container">

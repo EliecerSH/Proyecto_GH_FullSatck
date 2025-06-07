@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import NotesList from './NotesList';
 import Search from './Search';
 import Header from './Header';
+import AddNote from './AddNote';
 import '../../styles/Notes.css';
 
 const AppNotes = () => {
@@ -15,8 +16,6 @@ const AppNotes = () => {
 	]);
 
 	const [searchText, setSearchText] = useState('');
-
-	const [darkMode, setDarkMode] = useState(false);
 
 	useEffect(() => {
 		const savedNotes = JSON.parse(
@@ -35,7 +34,7 @@ const AppNotes = () => {
 		);
 	}, [notes]);
 
-	const addNote = (text) => {
+	const AddNote = (text) => {
 		const date = new Date();
 		const newNote = {
 			id: nanoid(),
@@ -47,20 +46,20 @@ const AppNotes = () => {
 	};
 
 	const deleteNote = (id) => {
-		const newNotes = notes.filter((note) => note.id !== id);
+		const newNotes = notes.filter((Note) => Note.id !== id);
 		setNotes(newNotes);
 	};
 
 	return (
 
 			<div className='container-note'>
-			<Header handleToggleDarkMode={setDarkMode} />
+			<Header />
 				<Search handleSearchNote={setSearchText} />
 				<NotesList
-					notes={notes.filter((note) =>
-						note.text.toLowerCase().includes(searchText)
+					notes={notes.filter((Note) =>
+						Note.text.toLowerCase().includes(searchText)
 					)}
-					handleAddNote={addNote}
+					handleAddNote={AddNote}
 					handleDeleteNote={deleteNote}
 				/>
 			</div>
