@@ -12,3 +12,9 @@
   margin-top: 0;
   text-align: center;
 }
+.controles {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
