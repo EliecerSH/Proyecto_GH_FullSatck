@@ -2,6 +2,7 @@ import './Apart_info.css'
 import editpng from '../assets/editar_icon.png'
 import '../App.css'
 import Apli_calculo from './Aplicaciones/Calculo/Apli_calculo'
+import Mecanografia from './Mecanografia/Mecanografia'
 
 function Apart_app(props){
     return(
@@ -12,6 +13,8 @@ function Apart_app(props){
             </div>
             <div>
                 <Apli_calculo></Apli_calculo>
+            </div>
+            <div><Mecanografia></Mecanografia>
             </div>
         </div>
     )
