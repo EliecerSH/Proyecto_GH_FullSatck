@@ -3,23 +3,32 @@ import AddNote from './AddNote';
 import '../../styles/Notes.css';
 
 const NotesList = ({
-	notes,
-	handleAddNote,
-	handleDeleteNote,
+    notes,
+    handleAddNote,
+    handleDeleteNote,
 }) => {
-	return (
-		<div className='notes-list'>
-			{[...notes].reverse().map((Note) => (
-		<Note
-			key={Note.id}
-			id={Note.id}
-			text={Note.text}
-			date={Note.date}
-			handleDeleteNote={handleDeleteNote}/>
-	   ))}
-			<AddNote handleAddNote={handleAddNote} />
-		</div>
-	);
+    const notesCount = notes.length;
+    const notesClass = `notes-list-notes${notesCount > 1 ? ' multiple' : ''}`;
+
+    return (
+        <div className="notes-list-vertical">
+            <div className="note-creator-wrapper">
+                <AddNote handleAddNote={handleAddNote} />
+            </div>
+            <div className={notesClass}>
+                {[...notes].reverse().map((note) => (
+                    <Note
+                        key={note.id}
+                        id={note.id}
+                        title={note.title}
+                        text={note.text}
+                        date={note.date}
+                        handleDeleteNote={handleDeleteNote}
+                    />
+                ))}
+            </div>
+        </div>
+    );
 };
 
 export default NotesList;

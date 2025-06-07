@@ -1,69 +1,61 @@
 import { useState, useEffect } from 'react';
-import { nanoid } from 'nanoid';
 import NotesList from './NotesList';
 import Search from './Search';
 import Header from './Header';
-import AddNote from './AddNote';
 import '../../styles/Notes.css';
 
 const AppNotes = () => {
-	const [notes, setNotes] = useState([
-		{
-			id: nanoid(),
-			text: 'This is my first note!',
-			date: '15/04/2025',
-		},
-	]);
+    const [notes, setNotes] = useState([]);
+    const [searchText, setSearchText] = useState('');
 
-	const [searchText, setSearchText] = useState('');
+    useEffect(() => {
+        try {
+            const savedNotes = JSON.parse(localStorage.getItem('notes-data'));
+            if (savedNotes) setNotes(savedNotes);
+        } catch (e) {
+			console.error('error para cargar notas de localStorage:', e);
+           
+        }
+    }, []);
 
-	useEffect(() => {
-		const savedNotes = JSON.parse(
-			localStorage.getItem('react-notes-app-data')
-		);
+    useEffect(() => {
+        try {
+            localStorage.setItem('notes-data', JSON.stringify(notes));
+        } catch (e) {
+            
+        }
+    }, [notes]);
 
-		if (savedNotes) {
-			setNotes(savedNotes);
-		}
-	}, []);
-
-	useEffect(() => {
-		localStorage.setItem(
-			'react-notes-app-data',
-			JSON.stringify(notes)
-		);
-	}, [notes]);
-
-	const AddNote = (text) => {
-		const date = new Date();
-		const newNote = {
-			id: nanoid(),
-			text: text,
-			date: date.toLocaleDateString(),
-		};
-		const newNotes = [...notes, newNote];
-		setNotes(newNotes);
+  	const addNote = (title, text) => {
+    	const newNote = {
+        id: Date.now(),
+        title,
+        text,
+        date: new Date().toLocaleDateString(),
+     };
+    	setNotes([...notes, newNote]);
 	};
 
-	const deleteNote = (id) => {
-		const newNotes = notes.filter((Note) => Note.id !== id);
-		setNotes(newNotes);
-	};
+    const deleteNote = (id) => {
+        setNotes(notes.filter((note) => note.id !== id));
+    };
 
-	return (
+    const filteredNotes = notes.filter(
+        (note) =>
+            note.title.toLowerCase().includes(searchText.toLowerCase()) ||
+            note.text.toLowerCase().includes(searchText.toLowerCase())
+    );
 
-			<div className='container-note'>
-			<Header />
-				<Search handleSearchNote={setSearchText} />
-				<NotesList
-					notes={notes.filter((Note) =>
-						Note.text.toLowerCase().includes(searchText)
-					)}
-					handleAddNote={AddNote}
-					handleDeleteNote={deleteNote}
-				/>
-			</div>
-	);
+    return (
+        <div className='notes-container'>
+            <Header />
+            <NotesList
+                notes={filteredNotes}
+                handleAddNote={addNote}
+                handleDeleteNote={deleteNote}
+            />
+        </div>
+    );
 };
 
 export default AppNotes;

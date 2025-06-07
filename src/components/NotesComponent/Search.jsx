@@ -4,7 +4,7 @@ import '../../styles/Notes.css';
 
 const Search = ({ handleSearchNote }) => {
 	return (
-		<div className='search'>
+		<div className='search-container'>
 			<MdSearch className='search-icons' size='1.3em' />
 			<input
 				onChange={(event) =>
