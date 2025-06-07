@@ -16,3 +16,50 @@ function Mecanografia() {
     "JavaScript y React son tecnologías web populares.",
     "La constancia es clave para aprender a programar."
   ];
+useEffect(() => {
+    if (!textoEjemplo) {
+      setTextoEjemplo(textosEjemplo[Math.floor(Math.random() * textosEjemplo.length)]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (estaEjecutando && tiempo > 0) {
+      const timer = setTimeout(() => setTiempo(tiempo - 1), 1000);
+      return () => clearTimeout(timer);
+    } else if (tiempo === 0) {
+      setEstaEjecutando(false);
+      calcularEstadisticas();
+    }
+  }, [tiempo, estaEjecutando]);
+
+  const iniciarPrueba = () => {
+    setTexto('');
+    setTiempo(60);
+    setCaracteres(0);
+    setPrecision(100);
+    setEstaEjecutando(true);
+    setTextoEjemplo(textosEjemplo[Math.floor(Math.random() * textosEjemplo.length)]);
+    setTimeout(() => inputRef.current.focus(), 100);
+  };
+
+  const handleChange = (e) => {
+    if (!estaEjecutando) return;
+    
+    const valor = e.target.value;
+    setTexto(valor);
+    setCaracteres(valor.length);
+  };
+
+  const calcularEstadisticas = () => {
+    let correctos = 0;
+    const longitud = Math.min(texto.length, textoEjemplo.length);
+    
+    for (let i = 0; i < longitud; i++) {
+      if (texto[i] === textoEjemplo[i]) {
+        correctos++;
+      }
+    }
+    
+    const nuevaPrecision = longitud > 0 ? Math.round((correctos / longitud) * 100) : 0;
+    setPrecision(nuevaPrecision);
+  };
