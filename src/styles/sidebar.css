@@ -15,7 +15,7 @@
 }
 
 .logo-icon{
-    font-size: 1.8rem;
+    font-size: 2rem;
     border-radius: 50%;
 }
 
@@ -42,4 +42,10 @@
     background: rgb(167, 165, 165);
     color: white;
 
+}
+
+.Mdtimer{
+    width: 26px !important;
+    height: 26px;
+    
 }
