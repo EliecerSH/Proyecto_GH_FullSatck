@@ -1,10 +1,10 @@
 #daily-info {
-    background-color: #f8f8f8; /* gris claro */
+    background-color: #ffffff; /* gris claro */
     padding: 0.7rem;
     border-radius: 0.75rem; /*redondeo de puntas*/
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /*sombreado*/
     font-family: sans-serif; /*tipografia*/
-    font-size: 1rem;
+    font-size: 1rem; /*tamano de letra*/
     font-weight: bold;
     margin-bottom: 1rem;
     color: rgb(0, 0, 0);
