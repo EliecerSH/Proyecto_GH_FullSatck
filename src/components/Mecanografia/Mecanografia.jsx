@@ -63,3 +63,57 @@ useEffect(() => {
     const nuevaPrecision = longitud > 0 ? Math.round((correctos / longitud) * 100) : 0;
     setPrecision(nuevaPrecision);
   };
+ return (
+    <div className="mecanografia-container">
+      <h2>Mecanografía</h2>
+      
+      <div className="controles">
+        <button 
+          onClick={iniciarPrueba} 
+          disabled={estaEjecutando}
+          className="boton-iniciar"
+        >
+          {estaEjecutando ? 'En progreso...' : 'Iniciar Prueba (1 minuto)'}
+        </button>
+        
+        <div className="tiempo">Tiempo restante: {tiempo}s</div>
+      </div>
+      
+      <div className="texto-ejemplo">
+        {textoEjemplo.split('').map((letra, index) => (
+          <span 
+            key={index} 
+            className={
+              index >= texto.length 
+                ? 'sin-escribir' 
+                : texto[index] === letra 
+                  ? 'correcto' 
+                  : 'incorrecto'
+            }
+          >
+            {letra}
+          </span>
+        ))}
+      </div>
+      
+      <textarea
+        ref={inputRef}
+        value={texto}
+        onChange={handleChange}
+        disabled={!estaEjecutando}
+        placeholder={estaEjecutando ? "Escribe aquí..." : "Presiona 'Iniciar Prueba'"}
+        className="area-texto"
+      />
+      
+      {tiempo === 0 && (
+        <div className="resultados">
+          <h3>Resultados:</h3>
+          <p>Caracteres por minuto: {caracteres}</p>
+          <p>Precisión: {precision}%</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default Mecanografia;
