@@ -1,11 +1,10 @@
-// src/firebase.js
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAKhLaKXcOMFcZyabvP60Bzr6RdEE-SFSc",
-  authDomain: "637871196246",
-  projectId: "proyectgithub-d33ed",
+  apiKey: "AIzaSyDwq3vfiGaRFNqqK0udDmuZ3tbQTULqFn8",
+  authDomain: "622856718795",
+  projectId: "proyectgit-af5a8",
   storageBucket: "TU_STORAGE_BUCKET",
   messagingSenderId: "TU_SENDER_ID",
   appId: "TU_APP_ID",
