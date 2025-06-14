@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from './components/Sidebar';
 import Content from './components/content.jsx';
 import './App.css';
-import { auth } from "./firebase";
-import { signOut } from "firebase/auth";
+import { auth, } from "./firebase";
+import { signOut, onAuthStateChanged } from "firebase/auth";
 import Login_users from "./components/login_users.jsx";
 
 const App = () => {
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const logout = async () => {
     await signOut(auth);
