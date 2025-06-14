@@ -3,7 +3,7 @@ import Sidebar from './components/Sidebar';
 import Content from './components/content.jsx';
 import './App.css';
 import { auth, } from "./firebase";
-import { signOut, onAuthStateChanged } from "firebase/auth";
+import { signOut, onAuthStateChanged } from "firebase/auth";/*se asegura de mantener abierta la sesion*/
 import Login_users from "./components/login_users.jsx";
 
 const App = () => {
