@@ -1,5 +1,5 @@
 import React from 'react'
-import ContentHeader from './contentHeader.jsx'
+import ContentHeader from './ContentHeader.jsx'
 import Card from './Card.jsx';
 import '../styles/Content.css'
 
