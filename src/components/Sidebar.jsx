@@ -4,7 +4,7 @@ import { FaListCheck } from "react-icons/fa6";
 import { FaSpotify } from "react-icons/fa";
 import { FaKeyboard } from "react-icons/fa";
 import { IoMdMenu } from "react-icons/io";
-import '../styles/Sidebar.css';
+import '../styles/Sidebar.css'
 
 const Sidebar = () => {
   return (
