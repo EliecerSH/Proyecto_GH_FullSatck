@@ -1,50 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/PomodoroApp.css';
 
-const PomodoroApp = () => {
-  const [minutes, setMinutes] = useState(25);
-  const [seconds, setSeconds] = useState(0);
-  const [isActive, setIsActive] = useState(false);
-  const [isBreak, setIsBreak] = useState(false);
-  const [cycles, setCycles] = useState(0);
+const PomodoroApp = ({ setActiveView, pomodoroState, setPomodoroState }) => {
+  const [timeLeft, setTimeLeft] = useState(pomodoroState.timeLeft || 25 * 60);
+  const [isActive, setIsActive] = useState(pomodoroState.running || false);
+  const [mode, setMode] = useState(pomodoroState.mode || 'work');
+  const [bgLoaded, setBgLoaded] = useState(false);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = '/images/background-pomodoro-4k.jpg';
+    img.onload = () => setBgLoaded(true);
+  }, []);
 
   useEffect(() => {
     let interval = null;
-
-    if (isActive) {
+    
+    if (isActive && timeLeft > 0) {
       interval = setInterval(() => {
-        if (seconds === 0) {
-          if (minutes === 0) {
-            clearInterval(interval);
-            const audio = new Audio('https://www.soundjay.com/buttons/sounds/button-09.mp3');
-            audio.play();
-            
-            if (!isBreak) {
-              setCycles(prev => prev + 1);
-              setIsBreak(true);
-              setMinutes(cycles % 3 === 2 ? 15 : 5); 
-            } else {
-              setIsBreak(false);
-              setMinutes(25);
-            }
-            setSeconds(0);
-            setIsActive(false);
-          } else {
-            setMinutes(minutes - 1);
-            setSeconds(59);
-          }
-        } else {
-          setSeconds(seconds - 1);
-        }
+        setTimeLeft(timeLeft - 1);
       }, 1000);
-    } else if (!isActive && interval) {
-      clearInterval(interval);
+    } else if (isActive && timeLeft === 0) {
+      const nextMode = mode === 'work' ? 'break' : 'work';
+      const nextTime = nextMode === 'work' ? 25 * 60 : 5 * 60;
+      
+      setMode(nextMode);
+      setTimeLeft(nextTime);
     }
 
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [isActive, minutes, seconds, isBreak, cycles]);
+    setPomodoroState({
+      running: isActive,
+      timeLeft: timeLeft,
+      mode: mode
+    });
+
+    return () => clearInterval(interval);
+  }, [isActive, timeLeft, mode, setPomodoroState]);
 
   const toggleTimer = () => {
     setIsActive(!isActive);
@@ -52,37 +43,42 @@ const PomodoroApp = () => {
 
   const resetTimer = () => {
     setIsActive(false);
-    setIsBreak(false);
-    setMinutes(25);
-    setSeconds(0);
+    setTimeLeft(25 * 60);
+    setMode('work');
   };
 
-  const formatTime = (time) => {
-    return time < 10 ? `0${time}` : `${time}`;
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   };
 
   return (
-    <div className={`pomodoro-container ${isBreak ? 'break-time' : 'work-time'}`}>
-        <h1 className="title-pomodoro">Pomodoro Timer</h1>
-      <h3>{isBreak ? 'Ya estamos en descanso!' : '¡Mantente concentrado!'}</h3>
-
-      <div className="timer-display">
-        {formatTime(minutes)}:{formatTime(seconds)}
+    <div className={`pomodoro-view ${mode} ${bgLoaded ? 'bg-loaded' : 'bg-loading'}`}>
+      <div className="pomodoro-container">
+        <h2 className="pomodoro-mode">
+          {mode === 'work' ? 'Tiempo de trabajo' : 'Tiempo de descanso'}
+        </h2>
+        <h1 className="pomodoro-timer">{formatTime(timeLeft)}</h1>
+        
+        <div className="pomodoro-controls">
+          <button 
+            className={`control-btn ${isActive ? 'pause-btn' : 'start-btn'}`}
+            onClick={toggleTimer}
+          >
+            {isActive ? 'Pausar' : 'Iniciar'}
+          </button>
+          <button className="control-btn reset-btn" onClick={resetTimer}>
+            Reiniciar
+          </button>
+          <button 
+            className="control-btn back-btn"
+            onClick={() => setActiveView('home')}
+          >
+            Volver al inicio
+          </button>
+        </div>
       </div>
-      <div className="controls">
-        <button onClick={toggleTimer} className="control-button">
-          {isActive ? 'Pausar' : 'Iniciar'}
-        </button>
-        <button onClick={resetTimer} className="control-button">
-          reiniciar
-        </button>
-      </div>
-      <h4 className="cycles">Ciclos completados: {cycles}</h4>
-      <p className="message">
-        {isBreak 
-          ? 'toma un descanso. estirate y ve por una energetica o un cafe.' 
-          : 'Enfócate en tu tarea. evita distracciones.'}
-      </p>
     </div>
   );
 };

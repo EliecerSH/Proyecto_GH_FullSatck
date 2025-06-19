@@ -5,6 +5,7 @@ import '../styles/Content.css'
 const Content = () => {
   return (
     <div className='content'>
+      <ContentHeader />
       <div className='cardss'></div><Card/>
     </div>
   );

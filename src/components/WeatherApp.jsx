@@ -29,6 +29,7 @@ const WeatherApp = () => {
   if (!weatherData) return <div className="weather-error">error</div>;
 
   return (
+   <div className="weather-wrapper">
     <div className="weather-container">
       <div className="weather-header">
         <h2>{weatherData.name}, {weatherData.sys.country}</h2>
@@ -48,6 +49,7 @@ const WeatherApp = () => {
       </div>
 
       <div className="weather-desc">{weatherData.weather[0].description}</div>
+    </div>
     </div>
   );
 };

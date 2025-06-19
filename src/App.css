@@ -1,48 +1,174 @@
 
-.dashboard {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: 100vh; 
-  width: 100%;
-}
-
-.dashboard-content {
-  height: 100%;
-  padding: 20px;
-  background: #f5f7fa; 
-  display: grid;
-  grid-template-columns: 1fr 1fr; 
-  grid-template-rows: 1fr 1fr; 
-  gap: 20px;
-}
-
-.top-bar {
-  height: 20px;
+body {
+  min-height: 100vh;
+  margin: 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  background: #ffffff;
-  padding: 10px 20px;
-  padding-top: 20px;
-
+  background: #222; /* optional: background color */
 }
 
-.top-bar .H3{
-    font-family: 'Arial', sans-serif;
-  }
+.app-container {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
 
 
-.control-button2 {
+.main-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+
+.content-area {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #121212;
+  background-image: url('./assets/a1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+  background-blend-mode: overlay;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: optimizeQuality;
+  background-color: rgba(18, 18, 1, 0.8);
+  opacity: 0.95;
+}
+
+
+.content-area > * {
+  position: relative;
+  z-index: 1;
+}
+
+
+.main-menu {
+  position: fixed;
+  bottom: 30px;
+  left: 52.5%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 50px;
   padding: 10px 20px;
-  font-size: 16px;
-  background-color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 1000;
+  gap: 10px;
   transition: all 0.3s ease;
 }
 
-.control-button2:hover{
-  background-color: #393e46;
-  color: #f4f4f4;
+.main-menu:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transform: translateX(-50%) translateY(-5px);
+}
+
+.main-menu .nav-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 15px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  color: #333;
+}
+
+.nav-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #7f8c8d;
+  transition: all 0.3s ease;
+  border-radius: 50px;
+  margin: 0 5px;
+}
+
+.nav-button:hover {
+  background-color: #f0f0f0;
+}
+
+.nav-button.active {
+  color: #3498db;
+  background-color: #e3f2fd;
+}
+
+.nav-icon {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+}
+
+.nav-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Focus Mode */
+.focus-mode-container {
+  width: 100%;
+  height: 100%;
+  background-color: #121212;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pomodoro-mini {
+  position: fixed;
+  bottom: 100px;
+  right: 30px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 15px 25px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pomodoro-mini-time {
+  font-size: 1.8rem;
+  font-weight: 300;
+  font-family: 'Courier New', monospace;
+}
+
+.pomodoro-mini-mode {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-top: 5px;
+}
+
+/* Añade estas reglas al archivo App.css */
+
+/* Eliminar scroll horizontal en toda la aplicación */
+html, body, #root, .app-container {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Asegurar que el layout principal no cause overflow */
+.main-layout {
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Contenedor del contenido principal */
+.content-area {
+  overflow-x: hidden;
+  width: 100%;
 }

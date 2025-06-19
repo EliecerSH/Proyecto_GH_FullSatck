@@ -83,7 +83,7 @@
 .notes-list-notes {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start; /* Align notes to the left */
+    justify-content: flex-start; 
     gap: 1rem;
     width: 100%;
     overflow-y: auto;
