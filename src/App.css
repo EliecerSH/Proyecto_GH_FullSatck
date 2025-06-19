@@ -5,7 +5,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #222; /* optional: background color */
+  background: #222;
 }
 
 .app-container {
