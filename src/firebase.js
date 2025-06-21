@@ -3,12 +3,15 @@ import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDwq3vfiGaRFNqqK0udDmuZ3tbQTULqFn8",
-  authDomain: "622856718795",
+  authDomain: "proyectgit-af5a8.firebaseapp.com",
   projectId: "proyectgit-af5a8",
-  storageBucket: "TU_STORAGE_BUCKET",
-  messagingSenderId: "TU_SENDER_ID",
-  appId: "TU_APP_ID",
+  storageBucket: "proyectgit-af5a8.firebasestorage.app",
+  messagingSenderId: "622856718795",
+  appId: "1:622856718795:web:d47f35e3eaed09e1df8e4e"
 };
 
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+const auth = getAuth(app);
+
+export { auth };
+export default app;
