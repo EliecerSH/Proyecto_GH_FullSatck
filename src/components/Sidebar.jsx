@@ -6,6 +6,7 @@ import { FaSpotify, FaKeyboard } from 'react-icons/fa';
 import { FaListCheck } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
+import { FaCalculator } from "react-icons/fa";
 import { auth } from '../firebase';
 import '../styles/Sidebar.css';
 
@@ -18,7 +19,8 @@ const Sidebar = ({ user, currentPath }) => {
     { name: "Weather", link: "/weather", icon: TiWeatherCloudy },
     { name: "Notes", link: "/notes", icon: FaListCheck },
     { name: "Spotify", link: "/spotify", icon: FaSpotify },
-    { name: "Mecanography", link: "/mecanography", icon: FaKeyboard }
+    { name: "Mecanography", link: "/mecanography", icon: FaKeyboard },
+    { name: "Calculo", link: "/calculo", icon: FaCalculator }
   ];
 
   const handleLogout = async () => {

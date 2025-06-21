@@ -1,11 +1,11 @@
 
 import React, { useState } from 'react';
-import '../styles/MenuImg.css'; // Estilos opcionales
+import '../styles/MenuImg.css';
 import playa_img from '../assets/Playa.jpeg';
 import CyberPunk from '../assets/PantallaCyberPunk.jpeg';
 import Lago from '../assets/Lago.jpg';
 import a1 from '../assets/a1.jpg';
-import pintura from '../assets/pintura.png'
+import { IoColorPaletteSharp } from "react-icons/io5";
 
 
 const MenuImg = ({ onSelect }) => {
@@ -28,9 +28,8 @@ const MenuImg = ({ onSelect }) => {
   return (
     <div className="background-selector-container">
       <button className="background-toggle-btn" onClick={toggleMenu}>
-        <img src={pintura} alt="" height='65%'/>
+        <IoColorPaletteSharp />
       </button>
-
       {open && (
         <div className="background-menu">
           <p>Selecciona un fondo:</p>

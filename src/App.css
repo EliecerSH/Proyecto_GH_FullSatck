@@ -152,8 +152,6 @@ body {
   margin-top: 5px;
 }
 
-/* Añade estas reglas al archivo App.css */
-
 /* Eliminar scroll horizontal en toda la aplicación */
 html, body, #root, .app-container {
   overflow-x: hidden;
@@ -174,4 +172,14 @@ html, body, #root, .app-container {
 
 .img-area{
   background-color: rgba(0, 0, 0, 0.7);
+}
+
+.loading {
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.5rem;
+  color: #fff;
 }
