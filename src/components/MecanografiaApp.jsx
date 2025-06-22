@@ -10,8 +10,9 @@ const MecanografiaApp = () => {
   const [pruebaCompletada, setPruebaCompletada] = useState(false);
   const [precision, setPrecision] = useState(100);
   const [velocidad, setVelocidad] = useState(0);
-  const [tiempoInicio, setTiempoInicio] = useState(0);
+  const [tiempoTranscurrido, setTiempoTranscurrido] = useState(0);
   const inputRef = useRef(null);
+  const intervaloRef = useRef(null);
 
   const textosEjemplo = [
     "La práctica constante mejora la velocidad de escritura.",
@@ -34,6 +35,14 @@ const MecanografiaApp = () => {
     }
   }, [texto, textoEjemplo, estaEjecutando]);
 
+  useEffect(() => {
+    return () => {
+      if (intervaloRef.current) {
+        clearInterval(intervaloRef.current);
+      }
+    };
+  }, []);
+
   const seleccionarTextoAleatorio = () => {
     const textosDisponibles = textosEjemplo.filter(t => t !== textoEjemplo);
     const textoAleatorio = textosDisponibles[Math.floor(Math.random() * textosDisponibles.length)] || textosEjemplo[0];
@@ -45,9 +54,16 @@ const MecanografiaApp = () => {
     setErroresTotales(0);
     setErroresPorLetra({});
     setPrecision(100);
+    setVelocidad(0);
+    setTiempoTranscurrido(0);
     setEstaEjecutando(true);
     setPruebaCompletada(false);
-    setTiempoInicio(Date.now());
+    
+    const inicio = Date.now();
+    intervaloRef.current = setInterval(() => {
+      setTiempoTranscurrido(Math.floor((Date.now() - inicio) / 1000));
+    }, 1000);
+
     seleccionarTextoAleatorio();
     setTimeout(() => inputRef.current.focus(), 100);
   };
@@ -76,10 +92,9 @@ const MecanografiaApp = () => {
   };
 
   const finalizarPrueba = () => {
-    const tiempoTranscurrido = (Date.now() - tiempoInicio) / 1000;
-    const caracteresPorMinuto = tiempoTranscurrido > 0 
-      ? Math.round((texto.length / tiempoTranscurrido) * 60)
-      : 0;
+    clearInterval(intervaloRef.current);
+    const tiempoEnSegundos = tiempoTranscurrido || 1;
+    const caracteresPorMinuto = Math.round((texto.length / tiempoEnSegundos) * 60);
     
     setVelocidad(caracteresPorMinuto);
     setPrecision(calcularPrecision());
@@ -98,6 +113,12 @@ const MecanografiaApp = () => {
     return texto[index] === textoEjemplo[index] ? 'letra-correcta' : 'letra-incorrecta';
   };
 
+  const formatTiempo = (segundos) => {
+    const mins = Math.floor(segundos / 60);
+    const secs = segundos % 60;
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  };
+
   return (
     <div className="mecanografia-container">
       <div className="header">
@@ -113,6 +134,12 @@ const MecanografiaApp = () => {
         >
           {estaEjecutando ? 'En progreso...' : 'Iniciar Prueba'}
         </button>
+        
+        {estaEjecutando && (
+          <div className="temporizador">
+            Tiempo: {formatTiempo(tiempoTranscurrido)}
+          </div>
+        )}
       </div>
       
       <div className="texto-ejemplo">
@@ -122,7 +149,7 @@ const MecanografiaApp = () => {
             className={`letra ${getClaseLetra(index)}`}
             data-error-count={erroresPorLetra[index] || null}
           >
-            {letra}
+            {letra === ' ' ? '\u00A0' : letra}
           </span>
         ))}
       </div>
@@ -153,6 +180,10 @@ const MecanografiaApp = () => {
               <span className="valor">{erroresTotales}</span>
               <span className="etiqueta">Errores</span>
             </div>
+            <div className="metrica">
+              <span className="valor">{formatTiempo(tiempoTranscurrido)}</span>
+              <span className="etiqueta">Tiempo</span>
+            </div>
           </div>
           
           {erroresTotales > 0 && (
@@ -168,13 +199,6 @@ const MecanografiaApp = () => {
               </div>
             </div>
           )}
-          
-          <button 
-            onClick={iniciarPrueba} 
-            className="boton-principal reiniciar"
-          >
-            Nueva Prueba
-          </button>
         </div>
       )}
     </div>
