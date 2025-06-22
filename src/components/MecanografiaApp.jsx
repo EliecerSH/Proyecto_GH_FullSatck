@@ -7,32 +7,34 @@ const MecanografiaApp = () => {
   const [estaEjecutando, setEstaEjecutando] = useState(false);
   const [textoEjemplo, setTextoEjemplo] = useState('');
   const [erroresTotales, setErroresTotales] = useState(0);
-  const [erroresPorLetra, setErroresPorLetra] = useState({});
   const [pruebaCompletada, setPruebaCompletada] = useState(false);
+  const [velocidad, setVelocidad] = useState(0);
   const inputRef = useRef(null);
 
   const textosEjemplo = [
     "La práctica hace al maestro en la mecanografía.",
     "Escribe sin mirar el teclado para mejorar tu velocidad.",
     "JavaScript y React son tecnologías web populares.",
-    "La constancia es clave para aprender a programar."
+    "La constancia es clave para aprender a programar.",
+    "El código limpio es esencial para el desarrollo sostenible.",
+    "La mecanografía rápida mejora tu productividad diaria.",
+    "Los atajos de teclado pueden ahorrarte mucho tiempo.",
+    "La atención al detalle es crucial en la programación."
   ];
 
   useEffect(() => {
-    if (!estaEjecutando && !textoEjemplo) {
+    if (!estaEjecutando) {
       setTextoEjemplo(textosEjemplo[Math.floor(Math.random() * textosEjemplo.length)]);
     }
-  }, [estaEjecutando, textoEjemplo]);
+  }, [estaEjecutando, pruebaCompletada]);
 
   useEffect(() => {
     if (estaEjecutando) {
-      // Finalizar si se completó el texto
       if (texto.length === textoEjemplo.length) {
         finalizarPrueba();
         return;
       }
 
-      // Temporizador
       if (tiempo > 0) {
         const timer = setTimeout(() => setTiempo(tiempo - 1), 1000);
         return () => clearTimeout(timer);
@@ -46,10 +48,8 @@ const MecanografiaApp = () => {
     setTexto('');
     setTiempo(60);
     setErroresTotales(0);
-    setErroresPorLetra({});
     setEstaEjecutando(true);
     setPruebaCompletada(false);
-    setTextoEjemplo(textosEjemplo[Math.floor(Math.random() * textosEjemplo.length)]);
     setTimeout(() => inputRef.current.focus(), 100);
   };
 
@@ -57,22 +57,14 @@ const MecanografiaApp = () => {
     if (!estaEjecutando) return;
     
     const nuevoTexto = e.target.value;
-    
-    // Limitar al largo del texto ejemplo
     if (nuevoTexto.length > textoEjemplo.length) return;
     
-    // Registrar errores (solo al agregar caracteres)
-    if (nuevoTexto.length > texto.length) {
+    // Contar errores
+    if (nuevoTexto.length > 0) {
       const nuevaLetra = nuevoTexto[nuevoTexto.length - 1];
       const letraCorrecta = textoEjemplo[nuevoTexto.length - 1];
-      
       if (nuevaLetra !== letraCorrecta) {
-        const posicionError = nuevoTexto.length - 1;
         setErroresTotales(prev => prev + 1);
-        setErroresPorLetra(prev => ({
-          ...prev,
-          [posicionError]: (prev[posicionError] || 0) + 1
-        }));
       }
     }
     
@@ -80,31 +72,46 @@ const MecanografiaApp = () => {
   };
 
   const finalizarPrueba = () => {
+    const tiempoUsado = 60 - tiempo;
+    const nuevaVelocidad = tiempoUsado > 0 ? Math.round((texto.length / tiempoUsado) * 60) : 0;
+    setVelocidad(nuevaVelocidad);
     setEstaEjecutando(false);
     setPruebaCompletada(true);
   };
 
   const calcularPrecision = () => {
     if (texto.length === 0) return 0;
-    const maxErrores = texto.length;
-    const precisionReal = ((texto.length - erroresTotales) / texto.length) * 100;
-    return Math.max(0, Math.round(precisionReal)); // Nunca menor a 0%
+    const precision = ((texto.length - erroresTotales) / texto.length) * 100;
+    return Math.max(0, Math.round(precision));
   };
 
   return (
     <div className="mecanografia-container">
-      <h2>Prueba de Mecanografía</h2>
+      <div className="header">
+        <h2>Prueba de Mecanografía</h2>
+        <div className="badge">Velocidad + Precisión</div>
+      </div>
       
       <div className="controles">
         <button 
           onClick={iniciarPrueba} 
           disabled={estaEjecutando}
-          className="boton-iniciar"
+          className={`boton-iniciar ${estaEjecutando ? 'active' : ''}`}
         >
-          {estaEjecutando ? 'En progreso...' : 'Iniciar Prueba (1 minuto)'}
+          {estaEjecutando ? (
+            <>
+              <span className="spinner"></span>
+              En progreso...
+            </>
+          ) : (
+            'Iniciar Prueba (1 minuto)'
+          )}
         </button>
         
-        <div className="tiempo">Tiempo restante: {tiempo}s</div>
+        <div className="tiempo">
+          <span className="icon">⏱️</span>
+          {tiempo}s restantes
+        </div>
       </div>
       
       <div className="texto-ejemplo">
@@ -127,38 +134,48 @@ const MecanografiaApp = () => {
         value={texto}
         onChange={handleChange}
         disabled={!estaEjecutando}
-        placeholder={estaEjecutando ? "Escribe aquí..." : "Presiona 'Iniciar Prueba'"}
+        placeholder={estaEjecutando ? "Comienza a escribir aquí..." : "Presiona 'Iniciar Prueba'"}
         className="area-texto"
       />
       
       {pruebaCompletada && (
         <div className="resultados">
-          <h3>Resultados</h3>
-          <div className="metricas">
-            <p>Texto completado: <span>{texto.length}/{textoEjemplo.length} caracteres</span></p>
-            <p>Errores totales: <span className="error-count">{erroresTotales}</span></p>
-            <p>Precisión: <span>{calcularPrecision()}%</span></p>
+          <div className="resultados-header">
+            <h3>Resultados</h3>
+            <button onClick={iniciarPrueba} className="boton-reiniciar">
+              Nueva Prueba
+            </button>
           </div>
           
-          {erroresTotales > 0 && (
-            <div className="errores-detallados">
-              <h4>Detalle de errores:</h4>
-              {Object.entries(erroresPorLetra).map(([posicion, cantidad]) => (
-                <p key={posicion}>
-                  Letra {parseInt(posicion) + 1} ({textoEjemplo[posicion]}): 
-                  <span className="error-count"> {cantidad} error{cantidad !== 1 ? 'es' : ''}</span>
-                </p>
-              ))}
+          <div className="metricas-grid">
+            <div className="metrica-box">
+              <div className="metrica-valor">{texto.length}</div>
+              <div className="metrica-label">Caracteres</div>
             </div>
-          )}
+            
+            <div className="metrica-box error">
+              <div className="metrica-valor">{erroresTotales}</div>
+              <div className="metrica-label">Errores</div>
+            </div>
+            
+            <div className="metrica-box">
+              <div className="metrica-valor">{velocidad}</div>
+              <div className="metrica-label">CPM</div>
+            </div>
+            
+            <div className="metrica-box precision">
+              <div className="metrica-valor">{calcularPrecision()}%</div>
+              <div className="metrica-label">Precisión</div>
+            </div>
+          </div>
           
-          <div className="feedback">
-            {calcularPrecision() >= 95 ? (
-              <p className="excelente">¡Excelente precisión!</p>
-            ) : calcularPrecision() >= 80 ? (
-              <p className="bueno">Buen trabajo, sigue practicando</p>
+          <div className={`feedback ${calcularPrecision() >= 90 ? 'excelente' : calcularPrecision() >= 70 ? 'bueno' : 'practica'}`}>
+            {calcularPrecision() >= 90 ? (
+              <><span>🎯</span> ¡Excelente precisión!</>
+            ) : calcularPrecision() >= 70 ? (
+              <><span>👍</span> Buen trabajo, sigue practicando</>
             ) : (
-              <p className="practica">Sigue practicando para mejorar</p>
+              <><span>💪</span> Sigue practicando para mejorar</>
             )}
           </div>
         </div>
