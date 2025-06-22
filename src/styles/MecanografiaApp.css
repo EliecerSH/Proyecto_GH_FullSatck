@@ -1,153 +1,314 @@
-/* Estilos Compactos */
-.mecanografia-compacto {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 1.5rem;
+/* Variables de color */
+:root {
+  --color-primario: #4361ee;
+  --color-secundario: #3f37c9;
+  --color-exito: #4cc9f0;
+  --color-error: #f72585;
+  --color-fondo: #f8f9fa;
+  --color-texto: #2b2d42;
+  --color-borde: #e9ecef;
+  --color-sombra: rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos base */
+.mecanografia-avanzada {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
   background: white;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', system-ui, sans-serif;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px var(--color-sombra);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--color-texto);
 }
 
-.mecanografia-compacto h1 {
-  font-size: 1.5rem;
-  color: #2c3e50;
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-.controles-compactos {
+.mecanografia-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
-  gap: 1rem;
+  margin-bottom: 1.5rem;
+  position: relative;
 }
 
-.boton-compacto {
-  padding: 0.75rem 1.5rem;
-  background: #4361ee;
+.mecanografia-header::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primario), var(--color-secundario));
+  border-radius: 3px;
+}
+
+.mecanografia-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.mecanografia-badge {
+  background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
   color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: background 0.2s;
-  flex-grow: 1;
-}
-
-.boton-compacto:hover:not(:disabled) {
-  background: #3a56d4;
-}
-
-.boton-compacto:disabled {
-  background: #7f8c8d;
-  cursor: not-allowed;
-}
-
-.badge-compacto {
-  background: #f0f2f5;
-  color: #4361ee;
   padding: 0.5rem 1rem;
   border-radius: 50px;
   font-size: 0.85rem;
   font-weight: 600;
+  box-shadow: 0 4px 6px rgba(67, 97, 238, 0.2);
 }
 
-.texto-ejemplo-compacto {
-  background: #f8f9fa;
-  padding: 1.25rem;
+.mecanografia-controles {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.mecanografia-boton {
+  padding: 0.75rem 1.5rem;
+  background: var(--color-primario);
+  color: white;
+  border: none;
   border-radius: 8px;
-  margin: 1rem 0;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: #2c3e50;
-  text-align: center;
-  min-height: 80px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(67, 97, 238, 0.2);
+}
+
+.mecanografia-boton:hover:not(:disabled) {
+  background: var(--color-secundario);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(67, 97, 238, 0.3);
+}
+
+.mecanografia-boton:disabled {
+  background: #adb5bd;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.mecanografia-boton.reiniciar {
+  background: white;
+  color: var(--color-primario);
+  border: 2px solid var(--color-primario);
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+.mecanografia-boton.reiniciar:hover {
+  background: var(--color-primario);
+  color: white;
+}
+
+.mecanografia-texto-ejemplo {
+  background: var(--color-fondo);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin: 1.5rem 0;
+  font-size: 1.25rem;
+  line-height: 1.8;
+  min-height: 120px;
+  font-family: 'Roboto Mono', monospace;
+  border: 1px solid var(--color-borde);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mecanografia-letra {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.letra-pendiente {
+  color: #adb5bd;
+}
+
+.letra-correcta {
+  color: var(--color-exito);
+  font-weight: 500;
+}
+
+.letra-incorrecta {
+  color: var(--color-error);
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.letra-incorrecta::after {
+  content: attr(data-error-count);
+  position: absolute;
+  top: -12px;
+  right: -5px;
+  font-size: 0.6rem;
+  background: var(--color-error);
+  color: white;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.area-texto-compacto {
+.mecanografia-input {
   width: 100%;
-  min-height: 120px;
-  padding: 1rem;
-  font-size: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  resize: none;
-  margin-bottom: 1rem;
-  font-family: inherit;
-}
-
-.area-texto-compacto:focus {
-  outline: none;
-  border-color: #4361ee;
-  box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
-}
-
-.resultados-compactos {
-  background: #f8f9fa;
+  min-height: 150px;
   padding: 1.25rem;
+  font-size: 1.1rem;
+  border: 2px solid var(--color-borde);
+  border-radius: 12px;
+  resize: none;
+  margin-bottom: 1.5rem;
+  font-family: 'Roboto Mono', monospace;
+  transition: all 0.3s ease;
+}
+
+.mecanografia-input:focus {
+  outline: none;
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+.mecanografia-input:disabled {
+  background: var(--color-fondo);
+  cursor: not-allowed;
+}
+
+.mecanografia-resultados {
+  background: var(--color-fondo);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-top: 1.5rem;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.mecanografia-resultados h3 {
+  margin-top: 0;
+  text-align: center;
+  color: var(--color-primario);
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+}
+
+.mecanografia-metricas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.metrica {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 8px var(--color-sombra);
+  transition: all 0.3s ease;
+}
+
+.metrica:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px var(--color-sombra);
+}
+
+.metrica-valor {
+  font-size: 1.75rem;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.metrica:nth-child(1) .metrica-valor {
+  color: var(--color-primario);
+}
+
+.metrica:nth-child(2) .metrica-valor {
+  color: var(--color-exito);
+}
+
+.metrica:nth-child(3) .metrica-valor {
+  color: var(--color-error);
+}
+
+.metrica-etiqueta {
+  font-size: 0.9rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.mecanografia-errores-detalle {
+  background: white;
+  padding: 1rem;
   border-radius: 8px;
   margin-top: 1rem;
+  box-shadow: 0 2px 8px var(--color-sombra);
 }
 
-.resultados-compactos h2 {
-  font-size: 1.25rem;
-  color: #2c3e50;
+.mecanografia-errores-detalle h4 {
+  margin-top: 0;
   margin-bottom: 1rem;
+  color: var(--color-texto);
+  font-size: 1.1rem;
   text-align: center;
 }
 
-.metricas-compactas {
+.errores-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 0.75rem;
+}
+
+.error-item {
   display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-bottom: 1.25rem;
-}
-
-.metricas-compactas p {
-  font-size: 1rem;
-  color: #2c3e50;
-}
-
-.metricas-compactas span {
-  font-weight: 600;
-  color: #4361ee;
-}
-
-.boton-reiniciar {
-  display: block;
-  width: 100%;
-  padding: 0.75rem;
-  background: white;
-  color: #4361ee;
-  border: 1px solid #4361ee;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+  background: #fff5f7;
   border-radius: 6px;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: all 0.2s;
 }
 
-.boton-reiniciar:hover {
-  background: #4361ee;
-  color: white;
+.error-letra {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-error);
+  margin-bottom: 0.25rem;
+}
+
+.error-cantidad {
+  font-size: 0.85rem;
+  color: var(--color-texto);
 }
 
 /* Responsive */
-@media (max-width: 480px) {
-  .mecanografia-compacto {
+@media (max-width: 768px) {
+  .mecanografia-avanzada {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .mecanografia-metricas {
+    grid-template-columns: 1fr;
+  }
+  
+  .errores-lista {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  }
+  
+  .mecanografia-texto-ejemplo {
+    font-size: 1.1rem;
+    min-height: 100px;
     padding: 1rem;
   }
   
-  .controles-compactos {
-    flex-direction: column;
-  }
-  
-  .badge-compacto {
-    width: 100%;
-    text-align: center;
+  .mecanografia-input {
+    min-height: 120px;
+    padding: 1rem;
   }
 }
