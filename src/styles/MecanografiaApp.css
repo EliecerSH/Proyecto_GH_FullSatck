@@ -85,6 +85,7 @@
   color: white;
 }
 
+/* TEXTO EJEMPLO - VERSIÓN CORREGIDA */
 .texto-ejemplo {
   background: var(--color-fondo);
   padding: 1.5rem;
@@ -94,12 +95,16 @@
   line-height: 1.6;
   min-height: 120px;
   font-family: 'Roboto Mono', monospace;
-  display: flex;
-  flex-wrap: wrap;
+  white-space: pre-wrap; /* Conserva espacios y saltos */
+  word-spacing: normal;
+  letter-spacing: normal;
+  overflow-wrap: break-word;
+  display: block; /* Cambiado de flex a block */
 }
 
 .letra {
   position: relative;
+  white-space: pre-wrap; /* Mantiene los espacios */
 }
 
 .letra-pendiente {
