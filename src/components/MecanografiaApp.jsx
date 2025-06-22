@@ -8,36 +8,42 @@ const MecanografiaApp = () => {
   const [caracteres, setCaracteres] = useState(0);
   const [precision, setPrecision] = useState(100);
   const [textoEjemplo, setTextoEjemplo] = useState('');
+  const [errores, setErrores] = useState(0);
+  const [pruebaCompletada, setPruebaCompletada] = useState(false);
+  const [velocidad, setVelocidad] = useState(0);
   const inputRef = useRef(null);
 
   const textosEjemplo = [
     "La práctica hace al maestro en la mecanografía.",
     "Escribe sin mirar el teclado para mejorar tu velocidad.",
     "JavaScript y React son tecnologías web populares.",
-    "La constancia es clave para aprender a programar."
+    "La constancia es clave para aprender a programar.",
+    "El código limpio es esencial para el desarrollo sostenible."
   ];
-useEffect(() => {
-    if (!textoEjemplo) {
+
+  useEffect(() => {
+    if (!estaEjecutando && !textoEjemplo) {
       setTextoEjemplo(textosEjemplo[Math.floor(Math.random() * textosEjemplo.length)]);
     }
-  }, []);
+  }, [estaEjecutando, textoEjemplo]);
 
   useEffect(() => {
     if (estaEjecutando && tiempo > 0) {
       const timer = setTimeout(() => setTiempo(tiempo - 1), 1000);
       return () => clearTimeout(timer);
-    } else if (tiempo === 0) {
-      setEstaEjecutando(false);
-      calcularEstadisticas();
+    } else if (tiempo === 0 || (texto.length === textoEjemplo.length && estaEjecutando)) {
+      finalizarPrueba();
     }
-  }, [tiempo, estaEjecutando]);
+  }, [tiempo, estaEjecutando, texto]);
 
   const iniciarPrueba = () => {
     setTexto('');
     setTiempo(60);
     setCaracteres(0);
     setPrecision(100);
+    setErrores(0);
     setEstaEjecutando(true);
+    setPruebaCompletada(false);
     setTextoEjemplo(textosEjemplo[Math.floor(Math.random() * textosEjemplo.length)]);
     setTimeout(() => inputRef.current.focus(), 100);
   };
@@ -48,6 +54,26 @@ useEffect(() => {
     const valor = e.target.value;
     setTexto(valor);
     setCaracteres(valor.length);
+    
+    // Calcular errores en tiempo real
+    let nuevosErrores = 0;
+    for (let i = 0; i < valor.length; i++) {
+      if (valor[i] !== textoEjemplo[i]) {
+        nuevosErrores++;
+      }
+    }
+    setErrores(nuevosErrores);
+    
+    // Verificar si se completó el texto
+    if (valor.length === textoEjemplo.length) {
+      finalizarPrueba();
+    }
+  };
+
+  const finalizarPrueba = () => {
+    setEstaEjecutando(false);
+    calcularEstadisticas();
+    setPruebaCompletada(true);
   };
 
   const calcularEstadisticas = () => {
@@ -62,10 +88,16 @@ useEffect(() => {
     
     const nuevaPrecision = longitud > 0 ? Math.round((correctos / longitud) * 100) : 0;
     setPrecision(nuevaPrecision);
+    
+    // Calcular velocidad (caracteres por minuto)
+    const tiempoUsado = 60 - tiempo;
+    const nuevaVelocidad = tiempoUsado > 0 ? Math.round((caracteres / tiempoUsado) * 60) : 0;
+    setVelocidad(nuevaVelocidad);
   };
- return (
+
+  return (
     <div className="mecanografia-container">
-      <h1>Mecanografía</h1>
+      <h2>Prueba de Mecanografía</h2>
       
       <div className="controles">
         <button 
@@ -105,6 +137,18 @@ useEffect(() => {
         className="area-texto"
       />
       
+      {pruebaCompletada && (
+        <div className="resultados">
+          <h3>Resultados de la Prueba</h3>
+          <p>Caracteres escritos: {caracteres}</p>
+          <p>Errores: {errores}</p>
+          <p>Precisión: {precision}%</p>
+          <p>Velocidad: {velocidad} caracteres por minuto</p>
+          {precision >= 90 && <p className="excelente">¡Excelente trabajo!</p>}
+          {precision >= 70 && precision < 90 && <p className="bueno">¡Buen trabajo!</p>}
+          {precision < 70 && <p className="practica">Sigue practicando</p>}
+        </div>
+      )}
     </div>
   );
 }
