@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import './MecanografiaApp.css';
+import "../styles/MecanografiaApp.css";
 
 const MecanografiaApp = () => {
   const [texto, setTexto] = useState('');
