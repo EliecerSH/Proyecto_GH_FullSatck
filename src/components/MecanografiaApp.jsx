@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import './MecanografiaAvanzada.css';
+import './MecanografiaApp.css';
 
 const MecanografiaAvanzada = () => {
   // Estados
