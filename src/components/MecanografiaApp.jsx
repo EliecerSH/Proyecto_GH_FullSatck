@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import './MecanografiaApp.css';
 
 const MecanografiaApp = () => {
-  // Estados
   const [texto, setTexto] = useState('');
   const [textoEjemplo, setTextoEjemplo] = useState('');
   const [estaEjecutando, setEstaEjecutando] = useState(false);
@@ -14,7 +13,6 @@ const MecanografiaApp = () => {
   const [tiempoInicio, setTiempoInicio] = useState(0);
   const inputRef = useRef(null);
 
-  // Banco de textos de ejemplo
   const textosEjemplo = [
     "La práctica constante mejora la velocidad de escritura.",
     "JavaScript es el lenguaje de programación más popular.",
@@ -24,28 +22,24 @@ const MecanografiaApp = () => {
     "La constancia es clave para dominar cualquier habilidad."
   ];
 
-  // Inicializar texto aleatorio
   useEffect(() => {
     if (!estaEjecutando && !pruebaCompletada) {
       seleccionarTextoAleatorio();
     }
   }, [estaEjecutando, pruebaCompletada]);
 
-  // Manejar la finalización
   useEffect(() => {
     if (estaEjecutando && texto.length === textoEjemplo.length) {
       finalizarPrueba();
     }
   }, [texto, textoEjemplo, estaEjecutando]);
 
-  // Seleccionar texto aleatorio
   const seleccionarTextoAleatorio = () => {
     const textosDisponibles = textosEjemplo.filter(t => t !== textoEjemplo);
-    const textoAleatorio = textosDisponibles[Math.floor(Math.random() * textosDisponibles.length)];
-    setTextoEjemplo(textoAleatorio || textosEjemplo[0]);
+    const textoAleatorio = textosDisponibles[Math.floor(Math.random() * textosDisponibles.length)] || textosEjemplo[0];
+    setTextoEjemplo(textoAleatorio);
   };
 
-  // Iniciar prueba
   const iniciarPrueba = () => {
     setTexto('');
     setErroresTotales(0);
@@ -58,16 +52,12 @@ const MecanografiaApp = () => {
     setTimeout(() => inputRef.current.focus(), 100);
   };
 
-  // Manejar cambios en el texto
   const handleChange = (e) => {
     if (!estaEjecutando) return;
     
     const nuevoTexto = e.target.value;
-    
-    // Limitar al largo del texto ejemplo
     if (nuevoTexto.length > textoEjemplo.length) return;
     
-    // Registrar errores solo al agregar caracteres
     if (nuevoTexto.length > texto.length) {
       const posicionActual = nuevoTexto.length - 1;
       const letraEscrita = nuevoTexto[posicionActual];
@@ -85,9 +75,8 @@ const MecanografiaApp = () => {
     setTexto(nuevoTexto);
   };
 
-  // Finalizar prueba
   const finalizarPrueba = () => {
-    const tiempoTranscurrido = (Date.now() - tiempoInicio) / 1000; // en segundos
+    const tiempoTranscurrido = (Date.now() - tiempoInicio) / 1000;
     const caracteresPorMinuto = tiempoTranscurrido > 0 
       ? Math.round((texto.length / tiempoTranscurrido) * 60)
       : 0;
@@ -98,41 +87,39 @@ const MecanografiaApp = () => {
     setPruebaCompletada(true);
   };
 
-  // Calcular precisión
   const calcularPrecision = () => {
     if (texto.length === 0) return 0;
     const precisionCalculada = ((texto.length - erroresTotales) / texto.length) * 100;
     return Math.max(0, Math.round(precisionCalculada));
   };
 
-  // Obtener clase para cada letra
   const getClaseLetra = (index) => {
     if (index >= texto.length) return 'letra-pendiente';
     return texto[index] === textoEjemplo[index] ? 'letra-correcta' : 'letra-incorrecta';
   };
 
   return (
-    <div className="mecanografia-avanzada">
-      <div className="mecanografia-header">
-        <h2>Prueba de Mecanografía Profesional</h2>
-        <div className="mecanografia-badge">Precisión + Velocidad</div>
+    <div className="mecanografia-container">
+      <div className="header">
+        <h2>Prueba de Mecanografía</h2>
+        <div className="badge">Velocidad + Precisión</div>
       </div>
       
-      <div className="mecanografia-controles">
+      <div className="controles">
         <button 
           onClick={iniciarPrueba} 
           disabled={estaEjecutando}
-          className="mecanografia-boton"
+          className="boton-principal"
         >
           {estaEjecutando ? 'En progreso...' : 'Iniciar Prueba'}
         </button>
       </div>
       
-      <div className="mecanografia-texto-ejemplo">
+      <div className="texto-ejemplo">
         {textoEjemplo.split('').map((letra, index) => (
           <span 
             key={index} 
-            className={`mecanografia-letra ${getClaseLetra(index)}`}
+            className={`letra ${getClaseLetra(index)}`}
             data-error-count={erroresPorLetra[index] || null}
           >
             {letra}
@@ -146,36 +133,36 @@ const MecanografiaApp = () => {
         onChange={handleChange}
         disabled={!estaEjecutando}
         placeholder={estaEjecutando ? "Escribe aquí..." : "Presiona 'Iniciar Prueba'"}
-        className="mecanografia-input"
+        className="area-texto"
       />
       
       {pruebaCompletada && (
-        <div className="mecanografia-resultados">
-          <h3>Resultados de la Prueba</h3>
+        <div className="resultados">
+          <h3>Resultados</h3>
           
-          <div className="mecanografia-metricas">
+          <div className="metricas">
             <div className="metrica">
-              <span className="metrica-valor">{velocidad}</span>
-              <span className="metrica-etiqueta">CPM</span>
+              <span className="valor">{velocidad}</span>
+              <span className="etiqueta">CPM</span>
             </div>
             <div className="metrica">
-              <span className="metrica-valor">{precision}%</span>
-              <span className="metrica-etiqueta">Precisión</span>
+              <span className="valor">{precision}%</span>
+              <span className="etiqueta">Precisión</span>
             </div>
             <div className="metrica">
-              <span className="metrica-valor">{erroresTotales}</span>
-              <span className="metrica-etiqueta">Errores</span>
+              <span className="valor">{erroresTotales}</span>
+              <span className="etiqueta">Errores</span>
             </div>
           </div>
           
           {erroresTotales > 0 && (
-            <div className="mecanografia-errores-detalle">
+            <div className="errores-detalle">
               <h4>Errores por letra:</h4>
               <div className="errores-lista">
                 {Object.entries(erroresPorLetra).map(([posicion, cantidad]) => (
                   <div key={posicion} className="error-item">
-                    <span className="error-letra">{textoEjemplo[posicion]}</span>
-                    <span className="error-cantidad">{cantidad} error{cantidad !== 1 ? 'es' : ''}</span>
+                    <span className="letra-error">{textoEjemplo[posicion]}</span>
+                    <span className="cantidad-error">{cantidad} error{cantidad !== 1 ? 'es' : ''}</span>
                   </div>
                 ))}
               </div>
@@ -184,9 +171,9 @@ const MecanografiaApp = () => {
           
           <button 
             onClick={iniciarPrueba} 
-            className="mecanografia-boton reiniciar"
+            className="boton-principal reiniciar"
           >
-            Realizar otra prueba
+            Nueva Prueba
           </button>
         </div>
       )}
@@ -194,4 +181,4 @@ const MecanografiaApp = () => {
   );
 };
 
-export default MecanografiaApp.jsx;
+export default MecanografiaApp;
