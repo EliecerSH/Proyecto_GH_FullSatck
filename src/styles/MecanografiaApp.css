@@ -1,4 +1,3 @@
-/* Variables */
 :root {
   --color-primario: #4361ee;
   --color-secundario: #3a56d4;
@@ -9,7 +8,6 @@
   --color-borde: #e9ecef;
 }
 
-/* Estilos base */
 .mecanografia-container {
   max-width: 800px;
   margin: 2rem auto;
@@ -46,8 +44,11 @@
 }
 
 .controles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-bottom: 1.5rem;
-  text-align: center;
+  gap: 1rem;
 }
 
 .boton-principal {
@@ -60,6 +61,8 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
+  width: 100%;
+  max-width: 200px;
 }
 
 .boton-principal:hover:not(:disabled) {
@@ -72,20 +75,15 @@
   cursor: not-allowed;
 }
 
-.boton-principal.reiniciar {
-  background: white;
+.temporizador {
+  font-size: 1.1rem;
+  font-weight: 600;
   color: var(--color-primario);
-  border: 2px solid var(--color-primario);
-  margin-top: 1.5rem;
-  width: 100%;
+  background: var(--color-fondo);
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
 }
 
-.boton-principal.reiniciar:hover {
-  background: var(--color-primario);
-  color: white;
-}
-
-/* TEXTO EJEMPLO - VERSIÓN CORREGIDA */
 .texto-ejemplo {
   background: var(--color-fondo);
   padding: 1.5rem;
@@ -95,16 +93,15 @@
   line-height: 1.6;
   min-height: 120px;
   font-family: 'Roboto Mono', monospace;
-  white-space: pre-wrap; /* Conserva espacios y saltos */
+  white-space: pre-wrap;
   word-spacing: normal;
   letter-spacing: normal;
   overflow-wrap: break-word;
-  display: block; /* Cambiado de flex a block */
 }
 
 .letra {
   position: relative;
-  white-space: pre-wrap; /* Mantiene los espacios */
+  white-space: pre-wrap;
 }
 
 .letra-pendiente {
@@ -174,19 +171,25 @@
 }
 
 .metricas {
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
   margin: 1.5rem 0;
 }
 
 .metrica {
   text-align: center;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .valor {
   font-size: 1.75rem;
   font-weight: 700;
   display: block;
+  margin-bottom: 0.25rem;
 }
 
 .metrica:nth-child(1) .valor {
@@ -199,6 +202,10 @@
 
 .metrica:nth-child(3) .valor {
   color: var(--color-error);
+}
+
+.metrica:nth-child(4) .valor {
+  color: var(--color-texto);
 }
 
 .etiqueta {
@@ -242,16 +249,25 @@
   color: var(--color-texto);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+@media (min-width: 768px) {
+  .metricas {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .controles {
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  .boton-principal {
+    width: auto;
+  }
+}
+
+@media (max-width: 480px) {
   .mecanografia-container {
     padding: 1.5rem;
     margin: 1rem;
-  }
-  
-  .metricas {
-    flex-direction: column;
-    gap: 1rem;
   }
   
   .texto-ejemplo, .area-texto {
