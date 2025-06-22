@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import './MecanografiaApp.css';
 
-const MecanografiaAvanzada = () => {
+const MecanografiaApp = () => {
   // Estados
   const [texto, setTexto] = useState('');
   const [textoEjemplo, setTextoEjemplo] = useState('');
