@@ -1,3 +1,5 @@
+/* MecanografiaApp.css - Versión Completa Mejorada */
+
 .mecanografia-container {
   max-width: 800px;
   margin: 2rem auto;
@@ -6,6 +8,7 @@
   color: white;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .mecanografia-container h2 {
@@ -13,6 +16,7 @@
   margin-bottom: 1.5rem;
   text-align: center;
   font-size: 2rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .controles {
@@ -23,6 +27,8 @@
   background: #34495e;
   padding: 1rem;
   border-radius: 8px;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .boton-iniciar {
@@ -35,22 +41,28 @@
   font-size: 1rem;
   font-weight: bold;
   transition: all 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .boton-iniciar:hover:not(:disabled) {
   background-color: #2ecc71;
   transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .boton-iniciar:disabled {
   background-color: #7f8c8d;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .tiempo {
   font-weight: bold;
   color: #f1c40f;
   font-size: 1.2rem;
+  min-width: 150px;
+  text-align: right;
 }
 
 .texto-ejemplo {
@@ -63,6 +75,14 @@
   min-height: 150px;
   color: #2c3e50;
   font-family: 'Courier New', monospace;
+  position: relative;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.texto-ejemplo span {
+  position: relative;
+  display: inline-block;
+  margin-right: 2px;
 }
 
 .sin-escribir {
@@ -78,6 +98,25 @@
   color: #e74c3c;
   text-decoration: underline;
   font-weight: bold;
+  background-color: rgba(231, 76, 60, 0.1);
+  border-radius: 2px;
+}
+
+.contador-error {
+  position: absolute;
+  top: -12px;
+  right: -8px;
+  font-size: 0.6rem;
+  color: white;
+  background-color: #e74c3c;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .area-texto {
@@ -90,16 +129,19 @@
   resize: none;
   margin-bottom: 1.5rem;
   font-family: 'Courier New', monospace;
+  transition: border-color 0.3s;
 }
 
 .area-texto:focus {
   outline: none;
   border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
 }
 
 .area-texto:disabled {
   background-color: #ecf0f1;
   opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .resultados {
@@ -108,6 +150,7 @@
   border-radius: 8px;
   margin-top: 1.5rem;
   color: #2c3e50;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .resultados h3 {
@@ -121,24 +164,47 @@
 .resultados p {
   margin: 0.75rem 0;
   font-size: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  max-width: 300px;
 }
 
-.excelente {
-  color: #27ae60;
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-
-.bueno {
-  color: #f39c12;
+.resultados p span:last-child {
   font-weight: bold;
 }
 
-.practica {
+.errores-detallados {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border-left: 4px solid #e74c3c;
+}
+
+.errores-detallados h4 {
+  margin-top: 0;
+  color: #2c3e50;
+  font-size: 1.1rem;
+}
+
+.errores-detallados p {
+  margin: 0.5rem 0;
+  padding: 0.3rem 0;
+  border-bottom: 1px dashed #ddd;
+  font-size: 0.95rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.error-count {
   color: #e74c3c;
   font-weight: bold;
+  background-color: rgba(231, 76, 60, 0.1);
+  padding: 0.1rem 0.5rem;
+  border-radius: 10px;
 }
 
+/* Estilos para móviles */
 @media (max-width: 768px) {
   .mecanografia-container {
     padding: 1rem;
@@ -152,5 +218,30 @@
   
   .texto-ejemplo, .area-texto {
     min-height: 120px;
+    font-size: 1rem;
+    padding: 1rem;
   }
+  
+  .tiempo {
+    text-align: center;
+    width: 100%;
+  }
+  
+  .resultados p {
+    max-width: 100%;
+  }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.resultados {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.contador-error {
+  animation: fadeIn 0.2s ease-out;
 }
