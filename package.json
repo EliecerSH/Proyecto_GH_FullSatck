@@ -10,8 +10,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.7",
+    "firebase": "^11.9.1",
+    "lucide-react": "^0.511.0",
+    "prop-types": "^15.8.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^7.6.2",
+    "react-scripts": "^5.0.1",
+    "react-window": "^1.8.11",
+    "shadcn-ui": "^0.9.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
@@ -23,8 +34,13 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
+<<<<<<< HEAD
     "postcss": "^8.5.3",
     "tailwindcss": "^4.1.5",
+=======
+    "postcss": "^8.5.5",
+    "tailwindcss": "^4.1.10",
+>>>>>>> beac275298f4e9760bee7ae07947c14427cd17da
     "vite": "^6.3.1"
   }
 }

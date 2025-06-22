@@ -1,0 +1,72 @@
+.game-container {
+    background-color: rgba(240, 255, 255, 0.932);
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    font-family: sans-serif;
+    padding: 20px;
+}
+
+.answer-input {
+  font-size: 18px;
+  padding: 8px;
+  width: 100px;
+  margin-bottom: 10px;
+}
+
+.check-button, .start-button, .pause-button {
+  font-size: 16px;
+  padding: 10px 20px;
+  margin: 10px 5px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.start-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.check-button {
+  background-color: #2196f3;
+  color: white;
+}
+
+.pause-button {
+  background-color: #7c7b78;
+  color: white;
+}
+
+.message {
+    justify-content: center;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.score, .best-score {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.timer {
+  font-size: 20px;
+  color: rgb(255, 0, 0);
+}
+
+.history {
+    justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+
+}
+
+.correct {
+  color: green;
+}
+
+.incorrect {
+  color: red;
+}

@@ -1,0 +1,61 @@
+/* src/components/BackgroundSelector.css */
+
+.background-selector-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  padding-right: 100;
+}
+
+.background-toggle-btn {
+  background-color: #ffffff;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: none;
+  transition: transform 0.2s ease;
+}
+
+.background-toggle-btn:hover {
+  transform: scale(1.1);
+}
+
+.background-menu {
+  background: white;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  margin-top: 10px;
+  width: 220px;
+}
+
+.background-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.bg-thumb {
+  width: 60px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border 0.3s ease;
+}
+
+.bg-thumb:hover {
+  border: 2px solid #4caf50;
+}
+
+
+  
+  
