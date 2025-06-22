@@ -194,4 +194,4 @@ const MecanografiaAvanzada = () => {
   );
 };
 
-export default MecanografiaAvanzada;
+export default MecanografiaApp.jsx;
