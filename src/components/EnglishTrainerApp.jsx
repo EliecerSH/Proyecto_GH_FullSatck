@@ -7,8 +7,18 @@ const EnglishTrainerApp = () => {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [feedback, setFeedback] = useState({ message: '', isCorrect: false });
-  const [currentExercise, setCurrentExercise] = useState({});
+  const [currentExercise, setCurrentExercise] = useState(null);
+  const [userAnswer, setUserAnswer] = useState({ 
+    simple: '',
+    past: '',
+    participle: '' 
+  });
+  const [feedback, setFeedback] = useState({
+    simple: null,
+    past: null,
+    participle: null,
+    general: null
+  });
   const inputRef = useRef(null);
 
   // Base de datos de ejercicios
@@ -20,7 +30,8 @@ const EnglishTrainerApp = () => {
         { spanish: "casa", english: "house" },
         { spanish: "perro", english: "dog" },
         { spanish: "libro", english: "book" },
-        // ... más palabras
+        { spanish: "agua", english: "water" },
+        { spanish: "ciudad", english: "city" }
       ]
     },
     irregularVerbs: {
@@ -30,7 +41,8 @@ const EnglishTrainerApp = () => {
         { base: "go", past: "went", participle: "gone", spanish: "ir" },
         { base: "eat", past: "ate", participle: "eaten", spanish: "comer" },
         { base: "see", past: "saw", participle: "seen", spanish: "ver" },
-        // ... más verbos
+        { base: "take", past: "took", participle: "taken", spanish: "tomar" },
+        { base: "write", past: "wrote", participle: "written", spanish: "escribir" }
       ]
     },
     presentSimple: {
@@ -39,33 +51,8 @@ const EnglishTrainerApp = () => {
       data: [
         { pronoun: "I", verb: "go", answer: "go" },
         { pronoun: "he", verb: "go", answer: "goes" },
-        // ... más conjugaciones
-      ]
-    },
-    pastTense: {
-      name: "Pasado Simple",
-      description: "Conjuga en pasado simple",
-      data: [
-        { verb: "play", answer: "played" },
-        { verb: "eat", answer: "ate" },
-        // ... más verbos
-      ]
-    },
-    futureTense: {
-      name: "Futuro Simple",
-      description: "Conjuga en futuro simple",
-      data: [
-        { verb: "go", answer: "will go" },
-        { verb: "eat", answer: "will eat" },
-        // ... más verbos
-      ]
-    },
-    listening: {
-      name: "Comprensión Auditiva",
-      description: "Escribe lo que escuches",
-      data: [
-        { audio: "sound1.mp3", answer: "hello world" },
-        // ... más audios
+        { pronoun: "we", verb: "eat", answer: "eat" },
+        { pronoun: "she", verb: "eat", answer: "eats" }
       ]
     }
   };
@@ -89,63 +76,147 @@ const EnglishTrainerApp = () => {
     setScore(0);
     setTimeLeft(60);
     setIsPlaying(true);
-    setFeedback({ message: '', isCorrect: false });
+    setUserAnswer({ simple: '', past: '', participle: '' });
+    setFeedback({ simple: null, past: null, participle: null, general: null });
     selectRandomExercise(mode);
-    setTimeout(() => inputRef.current?.focus(), 100);
+    setTimeout(() => {
+      const firstInput = document.querySelector('input:not([disabled])');
+      firstInput?.focus();
+    }, 100);
+  };
+
+  // Terminar juego
+  const endGame = () => {
+    setIsPlaying(false);
+    setGameMode(null);
   };
 
   // Seleccionar ejercicio aleatorio
   const selectRandomExercise = (mode) => {
-    const modeExercises = exercises[mode].data;
+    const modeExercises = exercises[mode]?.data || [];
     const randomIndex = Math.floor(Math.random() * modeExercises.length);
     setCurrentExercise(modeExercises[randomIndex]);
   };
 
-  // Verificar respuesta
+  // Manejar cambio en inputs
+  const handleInputChange = (e, field) => {
+    setUserAnswer({
+      ...userAnswer,
+      [field]: e.target.value
+    });
+  };
+
+  // Verificar respuestas para verbos irregulares
+  const checkVerbAnswers = () => {
+    if (!currentExercise) return;
+
+    const pastCorrect = userAnswer.past.toLowerCase() === currentExercise.past.toLowerCase();
+    const participleCorrect = userAnswer.participle.toLowerCase() === currentExercise.participle.toLowerCase();
+
+    const newFeedback = {
+      past: {
+        isCorrect: pastCorrect,
+        message: pastCorrect ? '✓ Correcto' : `✗ Debe ser: ${currentExercise.past}`
+      },
+      participle: {
+        isCorrect: participleCorrect,
+        message: participleCorrect ? '✓ Correcto' : `✗ Debe ser: ${currentExercise.participle}`
+      },
+      general: null
+    };
+
+    if (pastCorrect && participleCorrect) {
+      newFeedback.general = {
+        isCorrect: true,
+        message: '¡Perfecto! +20 puntos'
+      };
+      setScore(prev => prev + 20);
+    } else {
+      newFeedback.general = {
+        isCorrect: false,
+        message: 'Revisa tus respuestas'
+      };
+    }
+
+    setFeedback(newFeedback);
+  };
+
+  // Pasar al siguiente verbo
+  const nextVerb = () => {
+    selectRandomExercise('irregularVerbs');
+    setUserAnswer({ simple: '', past: '', participle: '' });
+    setFeedback({ simple: null, past: null, participle: null, general: null });
+    setTimeout(() => {
+      const firstInput = document.querySelector('.verb-forms input:not([disabled])');
+      firstInput?.focus();
+    }, 100);
+  };
+
+  // Verificar respuesta para otros modos
   const checkAnswer = () => {
+    if (!currentExercise) return;
+
     let isCorrect = false;
     let correctAnswer = '';
 
     switch(gameMode) {
       case 'vocabulary':
-        isCorrect = userAnswer.toLowerCase() === currentExercise.english.toLowerCase();
+        isCorrect = userAnswer.simple.toLowerCase() === currentExercise.english.toLowerCase();
         correctAnswer = currentExercise.english;
         break;
-      case 'irregularVerbs':
-        // Lógica para verbos irregulares
-        break;
-      // ... otros modos
-      default:
-        isCorrect = userAnswer.toLowerCase() === currentExercise.answer.toLowerCase();
+      case 'presentSimple':
+        isCorrect = userAnswer.simple.toLowerCase() === currentExercise.answer.toLowerCase();
         correctAnswer = currentExercise.answer;
+        break;
+      default:
+        return;
     }
 
     if (isCorrect) {
       setScore(prev => prev + 10);
-      setFeedback({ message: '✓ Correcto! +10 puntos', isCorrect: true });
+      setFeedback({
+        general: {
+          isCorrect: true,
+          message: '✓ Correcto! +10 puntos'
+        }
+      });
     } else {
-      setFeedback({ 
-        message: `✗ Incorrecto. Respuesta: ${correctAnswer}`, 
-        isCorrect: false 
+      setFeedback({
+        general: {
+          isCorrect: false,
+          message: `✗ Incorrecto. Respuesta: ${correctAnswer}`
+        }
       });
     }
 
     setTimeout(() => {
       selectRandomExercise(gameMode);
-      setUserAnswer('');
-      setFeedback({ message: '', isCorrect: false });
+      setUserAnswer({ simple: '', past: '', participle: '' });
+      setFeedback({ simple: null, past: null, participle: null, general: null });
       inputRef.current?.focus();
     }, 1500);
   };
 
   // Renderizar ejercicio según el modo
   const renderExercise = () => {
+    if (!currentExercise) return <div className="loading">Cargando ejercicio...</div>;
+
     switch(gameMode) {
       case 'vocabulary':
         return (
           <div className="exercise">
             <h3>Traduce al inglés:</h3>
             <h2>{currentExercise.spanish}</h2>
+            <input
+              ref={inputRef}
+              type="text"
+              value={userAnswer.simple}
+              onChange={(e) => handleInputChange(e, 'simple')}
+              onKeyDown={(e) => e.key === 'Enter' && checkAnswer()}
+              placeholder="Escribe la traducción"
+              className="answer-input"
+              autoFocus
+            />
           </div>
         );
       case 'irregularVerbs':
@@ -153,25 +224,91 @@ const EnglishTrainerApp = () => {
           <div className="exercise">
             <h3>Completa las formas del verbo:</h3>
             <div className="verb-forms">
-              <p>Base: {currentExercise.base}</p>
-              <p>Pasado: <input type="text" placeholder="Pasado" /></p>
-              <p>Participio: <input type="text" placeholder="Participio" /></p>
-              <p>Significado: {currentExercise.spanish}</p>
+              <div className="verb-form">
+                <label>Base:</label>
+                <input 
+                  type="text" 
+                  value={currentExercise.base} 
+                  disabled 
+                />
+              </div>
+              <div className="verb-form">
+                <label>Pasado:</label>
+                <input
+                  type="text"
+                  value={userAnswer.past}
+                  onChange={(e) => handleInputChange(e, 'past')}
+                  onKeyDown={(e) => e.key === 'Enter' && checkVerbAnswers()}
+                  placeholder="Escribe el pasado"
+                />
+                {feedback.past && (
+                  <span className={`verb-feedback ${feedback.past.isCorrect ? 'correct' : 'incorrect'}`}>
+                    {feedback.past.message}
+                  </span>
+                )}
+              </div>
+              <div className="verb-form">
+                <label>Participio:</label>
+                <input
+                  type="text"
+                  value={userAnswer.participle}
+                  onChange={(e) => handleInputChange(e, 'participle')}
+                  onKeyDown={(e) => e.key === 'Enter' && checkVerbAnswers()}
+                  placeholder="Escribe el participio"
+                />
+                {feedback.participle && (
+                  <span className={`verb-feedback ${feedback.participle.isCorrect ? 'correct' : 'incorrect'}`}>
+                    {feedback.participle.message}
+                  </span>
+                )}
+              </div>
+              <div className="verb-form">
+                <label>Significado:</label>
+                <input 
+                  type="text" 
+                  value={currentExercise.spanish} 
+                  disabled 
+                />
+              </div>
+            </div>
+            <div className="verb-actions">
+              <button 
+                onClick={checkVerbAnswers}
+                disabled={!userAnswer.past || !userAnswer.participle}
+                className="check-button"
+              >
+                Verificar Respuestas
+              </button>
             </div>
           </div>
         );
-      // ... otros casos
+      case 'presentSimple':
+        return (
+          <div className="exercise">
+            <h3>Conjuga el verbo en presente simple:</h3>
+            <p>{currentExercise.pronoun} ({currentExercise.verb})</p>
+            <input
+              ref={inputRef}
+              type="text"
+              value={userAnswer.simple}
+              onChange={(e) => handleInputChange(e, 'simple')}
+              onKeyDown={(e) => e.key === 'Enter' && checkAnswer()}
+              placeholder="Escribe la conjugación"
+              className="answer-input"
+              autoFocus
+            />
+          </div>
+        );
       default:
-        return null;
+        return <div className="exercise">Modo no implementado aún</div>;
     }
   };
 
   return (
     <div className="english-trainer-container">
-      {/* Cabecera y selección de modos */}
       {!gameMode ? (
         <div className="mode-selection">
-          <h1>English Mastery</h1>
+          <h1>English Trainer</h1>
           <p>Selecciona un modo de entrenamiento:</p>
           
           <div className="modes-grid">
@@ -189,39 +326,27 @@ const EnglishTrainerApp = () => {
         </div>
       ) : (
         <div className="game-screen">
-          {/* Interfaz del juego */}
           <div className="game-header">
             <h2>{exercises[gameMode].name}</h2>
             <div className="game-stats">
               <span>Puntuación: {score}</span>
               <span>Tiempo: {timeLeft}s</span>
+              <button onClick={endGame} className="end-button">
+                Terminar
+              </button>
             </div>
           </div>
 
           {renderExercise()}
 
-          {/* Input y botones */}
-          <div className="answer-section">
-            <input
-              ref={inputRef}
-              type="text"
-              value={userAnswer}
-              onChange={(e) => setUserAnswer(e.target.value)}
-              placeholder="Tu respuesta..."
-              className="answer-input"
-              autoFocus
-            />
-            <button 
-              onClick={checkAnswer}
-              className="check-button"
-            >
-              Comprobar
-            </button>
-          </div>
-
-          {feedback.message && (
-            <div className={`feedback ${feedback.isCorrect ? 'correct' : 'incorrect'}`}>
-              {feedback.message}
+          {feedback.general && (
+            <div className={`feedback ${feedback.general.isCorrect ? 'correct' : 'incorrect'}`}>
+              {feedback.general.message}
+              {feedback.general.isCorrect && gameMode === 'irregularVerbs' && (
+                <button onClick={nextVerb} className="next-button">
+                  Siguiente Verbo →
+                </button>
+              )}
             </div>
           )}
         </div>
