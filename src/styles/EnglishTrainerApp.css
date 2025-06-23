@@ -1,28 +1,134 @@
 .english-trainer-container {
+  max-width: 500px;
+  margin: 2rem auto;
   padding: 2rem;
-  margin: 2rem;
-  border: 2px solid #4361ee;
-  border-radius: 8px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
 }
 
-.test-box {
-  padding: 2rem;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  margin: 1rem 0;
+.english-trainer-container h1 {
+  color: #4361ee;
+  margin-bottom: 1.5rem;
 }
 
-.test-button {
-  padding: 0.5rem 1rem;
+.start-screen {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.start-button {
+  padding: 0.8rem 1.6rem;
   background-color: #4361ee;
   color: white;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  border-radius: 8px;
   font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-.test-button:hover {
+.start-button:hover {
   background-color: #3a56d4;
+  transform: translateY(-2px);
+}
+
+.game-screen {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.game-info {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  color: #2b2d42;
+}
+
+.word-card {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.word-card h2 {
+  color: #6c757d;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.word-card h3 {
+  color: #4361ee;
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.answer-input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.answer-input:focus {
+  outline: none;
+  border-color: #4361ee;
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+.check-button {
+  padding: 0.8rem 1.6rem;
+  background-color: #4cc9f0;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.check-button:hover:not(:disabled) {
+  background-color: #3aa8d4;
+  transform: translateY(-1px);
+}
+
+.check-button:disabled {
+  background-color: #adb5bd;
+  cursor: not-allowed;
+}
+
+.feedback {
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-weight: 500;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.feedback.correct {
+  background-color: #e6f9ef;
+  color: #2ecc71;
+}
+
+.feedback.incorrect {
+  background-color: #fdedec;
+  color: #e74c3c;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .english-trainer-container {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
 }
