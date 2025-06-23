@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import './EnglishTrainer.css';
+import "../styles/EnglishTrainerApp.css";
 
 const EnglishTrainer = () => {
   // Estados generales
