@@ -8,6 +8,7 @@ import WeatherApp from './components/WeatherApp';
 import AppNotes from './components/NotesComponent/AppNotes';
 import SpotifyPlaylistApp from './components/SpotifyPlaylistApp';
 import MecanografiaApp from './components/MecanografiaApp';
+import EnglishTrainer from './components/EnglishTrainerApp';
 import LoginUsers from './components/LoginUsers';
 import MenuImg from './components/MenuImg';
 import ApliCalculo from './components/ApliCalculo';
