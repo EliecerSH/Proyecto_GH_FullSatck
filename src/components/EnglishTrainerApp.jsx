@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './EnglishTrainerApp.css';
+import '../styles/EnglishTrainerApp.css'; // Asegúrate de tener este archivo CSS
 
 const EnglishTrainerApp = () => {
   // Estados del juego
