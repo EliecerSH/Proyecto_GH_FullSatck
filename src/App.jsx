@@ -114,6 +114,7 @@ const App = () => {
               <Route path="/spotify" element={<SpotifyPlaylistApp />} />
               <Route path="/mecanography" element={<MecanografiaApp />} />
               <Route path="/calculo" element={<ApliCalculo />} />
+              <Route path="/english-trainer" element={<EnglishTrainer />} />
             </Routes>
 
             <div className="img-area">
