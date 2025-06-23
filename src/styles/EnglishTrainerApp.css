@@ -1,0 +1,98 @@
+.english-trainer-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+}
+
+.mode-selector {
+  margin-top: 2rem;
+}
+
+.game-modes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.game-modes button {
+  padding: 1.5rem;
+  background: #4361ee;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-modes button:hover {
+  background: #3a56d4;
+  transform: translateY(-3px);
+}
+
+.game-modes button span {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-top: 0.5rem;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 1rem;
+  background: #f8f9fa;
+  border-radius: 50px;
+}
+
+.game-container {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 10px;
+  margin: 1rem 0;
+}
+
+.game-container input {
+  padding: 0.75rem 1rem;
+  width: 80%;
+  margin: 1rem 0;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.game-container button {
+  padding: 0.75rem 1.5rem;
+  background: #4361ee;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 0 0.5rem;
+}
+
+.feedback {
+  margin-top: 1rem;
+  font-weight: bold;
+  min-height: 1.5rem;
+}
+
+.game-over {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+  border-radius: 10px;
+  margin-top: 1.5rem;
+}
+
+.game-over button {
+  margin: 0.5rem;
+}
