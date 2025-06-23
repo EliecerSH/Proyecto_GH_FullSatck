@@ -45,14 +45,31 @@ const EnglishTrainerApp = () => {
         { base: "write", past: "wrote", participle: "written", spanish: "escribir" }
       ]
     },
-    presentSimple: {
-      name: "Presente Simple",
-      description: "Conjuga en presente simple",
+    tenses: {
+      name: "Tiempos Verbales",
+      description: "Practica presente, pasado y futuro",
       data: [
-        { pronoun: "I", verb: "go", answer: "go" },
-        { pronoun: "he", verb: "go", answer: "goes" },
-        { pronoun: "we", verb: "eat", answer: "eat" },
-        { pronoun: "she", verb: "eat", answer: "eats" }
+        // Presente simple
+        { tense: "present", pronoun: "I", verb: "eat", answer: "eat", spanish: "yo como" },
+        { tense: "present", pronoun: "He", verb: "eat", answer: "eats", spanish: "él come" },
+        { tense: "present", pronoun: "We", verb: "go", answer: "go", spanish: "nosotros vamos" },
+        
+        // Pasado simple
+        { tense: "past", pronoun: "She", verb: "go", answer: "went", spanish: "ella fue" },
+        { tense: "past", pronoun: "I", verb: "see", answer: "saw", spanish: "yo vi" },
+        { tense: "past", pronoun: "They", verb: "eat", answer: "ate", spanish: "ellos comieron" },
+        
+        // Futuro simple
+        { tense: "future", pronoun: "We", verb: "travel", answer: "will travel", spanish: "nosotros viajaremos" },
+        { tense: "future", pronoun: "You", verb: "learn", answer: "will learn", spanish: "tú aprenderás" },
+        { tense: "future", pronoun: "She", verb: "call", answer: "will call", spanish: "ella llamará" },
+        
+        // Presente continuo
+        { tense: "present", pronoun: "I", verb: "run", answer: "am running", spanish: "yo estoy corriendo" },
+        { tense: "present", pronoun: "He", verb: "work", answer: "is working", spanish: "él está trabajando" },
+        
+        // Pasado continuo
+        { tense: "past", pronoun: "They", verb: "sleep", answer: "were sleeping", spanish: "ellos estaban durmiendo" }
       ]
     }
   };
@@ -69,6 +86,17 @@ const EnglishTrainerApp = () => {
     }
     return () => clearInterval(timer);
   }, [isPlaying, timeLeft]);
+
+  // Helper function para nombres de tiempos verbales
+  const getTenseName = (tense) => {
+    const tenseNames = {
+      present: "presente",
+      past: "pasado",
+      future: "futuro",
+      continuous: "continuo"
+    };
+    return tenseNames[tense] || tense;
+  };
 
   // Iniciar juego
   const startGame = (mode) => {
@@ -164,7 +192,7 @@ const EnglishTrainerApp = () => {
         isCorrect = userAnswer.simple.toLowerCase() === currentExercise.english.toLowerCase();
         correctAnswer = currentExercise.english;
         break;
-      case 'presentSimple':
+      case 'tenses':
         isCorrect = userAnswer.simple.toLowerCase() === currentExercise.answer.toLowerCase();
         correctAnswer = currentExercise.answer;
         break;
@@ -282,11 +310,16 @@ const EnglishTrainerApp = () => {
             </div>
           </div>
         );
-      case 'presentSimple':
+      case 'tenses':
         return (
-          <div className="exercise">
-            <h3>Conjuga el verbo en presente simple:</h3>
+          <div className="exercise exercise-tenses">
+            <h3>Conjuga el verbo en: 
+              <span className="tense-indicator">
+                {getTenseName(currentExercise.tense)}
+              </span>
+            </h3>
             <p>{currentExercise.pronoun} ({currentExercise.verb})</p>
+            <p className="hint">En español: {currentExercise.spanish}</p>
             <input
               ref={inputRef}
               type="text"

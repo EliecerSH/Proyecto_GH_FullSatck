@@ -94,6 +94,11 @@
   border: none;
   border-radius: 20px;
   cursor: pointer;
+  transition: background 0.2s;
+}
+
+.end-button:hover {
+  background: #c0392b;
 }
 
 /* Ejercicios */
@@ -104,6 +109,12 @@
   margin: 1rem 0;
   text-align: center;
   box-shadow: var(--shadow);
+}
+
+/* Estilo específico para tiempos verbales */
+.exercise-tenses {
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 /* Estilos para verbos irregulares */
@@ -173,6 +184,7 @@
   font-size: 1rem;
   margin: 1rem auto;
   display: block;
+  transition: all 0.2s;
 }
 
 .answer-input:focus {
@@ -251,10 +263,31 @@
   color: var(--text-light);
 }
 
+/* Estilos para tiempos verbales */
+.hint {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  margin: 0.5rem 0 1.5rem;
+  font-style: italic;
+}
+
+.tense-indicator {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  background: var(--secondary);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  margin-left: 0.8rem;
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .english-trainer-container {
     padding: 1rem;
+    margin: 1rem;
   }
   
   .modes-grid {
@@ -287,5 +320,32 @@
   .next-button {
     margin-left: 0;
     margin-top: 0.5rem;
+  }
+
+  .tense-indicator {
+    display: block;
+    margin: 0.5rem 0 0 0;
+    width: fit-content;
+  }
+
+  .exercise {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-stats {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .answer-input {
+    padding: 0.7rem;
+  }
+
+  .check-button, .next-button {
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
   }
 }
