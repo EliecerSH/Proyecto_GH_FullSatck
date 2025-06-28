@@ -1,97 +1,155 @@
 import { useState, useEffect, useRef } from 'react';
-import '../styles/MecanografiaApp.css';
+import "../styles/MecanografiaApp.css";
 
 const MecanografiaApp = () => {
   const [texto, setTexto] = useState('');
-  const [tiempo, setTiempo] = useState(60);
-  const [estaEjecutando, setEstaEjecutando] = useState(false);
-  const [caracteres, setCaracteres] = useState(0);
-  const [precision, setPrecision] = useState(100);
   const [textoEjemplo, setTextoEjemplo] = useState('');
+  const [estaEjecutando, setEstaEjecutando] = useState(false);
+  const [erroresTotales, setErroresTotales] = useState(0);
+  const [erroresPorLetra, setErroresPorLetra] = useState({});
+  const [pruebaCompletada, setPruebaCompletada] = useState(false);
+  const [precision, setPrecision] = useState(100);
+  const [velocidad, setVelocidad] = useState(0);
+  const [tiempoTranscurrido, setTiempoTranscurrido] = useState(0);
   const inputRef = useRef(null);
+  const intervaloRef = useRef(null);
 
   const textosEjemplo = [
-    "La práctica hace al maestro en la mecanografía.",
-    "Escribe sin mirar el teclado para mejorar tu velocidad.",
-    "JavaScript y React son tecnologías web populares.",
-    "La constancia es clave para aprender a programar."
+    "La práctica constante mejora la velocidad de escritura.",
+    "JavaScript es el lenguaje de programación más popular.",
+    "Escribe sin mirar el teclado para mejorar tu técnica.",
+    "La mecanografía es una habilidad esencial en tecnología.",
+    "React es una biblioteca popular para construir interfaces.",
+    "La constancia es clave para dominar cualquier habilidad."
   ];
-useEffect(() => {
-    if (!textoEjemplo) {
-      setTextoEjemplo(textosEjemplo[Math.floor(Math.random() * textosEjemplo.length)]);
-    }
-  }, []);
 
   useEffect(() => {
-    if (estaEjecutando && tiempo > 0) {
-      const timer = setTimeout(() => setTiempo(tiempo - 1), 1000);
-      return () => clearTimeout(timer);
-    } else if (tiempo === 0) {
-      setEstaEjecutando(false);
-      calcularEstadisticas();
+    if (!estaEjecutando && !pruebaCompletada) {
+      seleccionarTextoAleatorio();
     }
-  }, [tiempo, estaEjecutando]);
+  }, [estaEjecutando, pruebaCompletada]);
+
+  useEffect(() => {
+    if (estaEjecutando && texto.length === textoEjemplo.length) {
+      finalizarPrueba();
+    }
+  }, [texto, textoEjemplo, estaEjecutando]);
+
+  useEffect(() => {
+    return () => {
+      if (intervaloRef.current) {
+        clearInterval(intervaloRef.current);
+      }
+    };
+  }, []);
+
+  const seleccionarTextoAleatorio = () => {
+    const textosDisponibles = textosEjemplo.filter(t => t !== textoEjemplo);
+    const textoAleatorio = textosDisponibles[Math.floor(Math.random() * textosDisponibles.length)] || textosEjemplo[0];
+    setTextoEjemplo(textoAleatorio);
+  };
 
   const iniciarPrueba = () => {
     setTexto('');
-    setTiempo(60);
-    setCaracteres(0);
+    setErroresTotales(0);
+    setErroresPorLetra({});
     setPrecision(100);
+    setVelocidad(0);
+    setTiempoTranscurrido(0);
     setEstaEjecutando(true);
-    setTextoEjemplo(textosEjemplo[Math.floor(Math.random() * textosEjemplo.length)]);
+    setPruebaCompletada(false);
+    
+    const inicio = Date.now();
+    intervaloRef.current = setInterval(() => {
+      setTiempoTranscurrido(Math.floor((Date.now() - inicio) / 1000));
+    }, 1000);
+
+    seleccionarTextoAleatorio();
     setTimeout(() => inputRef.current.focus(), 100);
   };
 
   const handleChange = (e) => {
     if (!estaEjecutando) return;
     
-    const valor = e.target.value;
-    setTexto(valor);
-    setCaracteres(valor.length);
-  };
-
-  const calcularEstadisticas = () => {
-    let correctos = 0;
-    const longitud = Math.min(texto.length, textoEjemplo.length);
+    const nuevoTexto = e.target.value;
+    if (nuevoTexto.length > textoEjemplo.length) return;
     
-    for (let i = 0; i < longitud; i++) {
-      if (texto[i] === textoEjemplo[i]) {
-        correctos++;
+    if (nuevoTexto.length > texto.length) {
+      const posicionActual = nuevoTexto.length - 1;
+      const letraEscrita = nuevoTexto[posicionActual];
+      const letraCorrecta = textoEjemplo[posicionActual];
+      
+      if (letraEscrita !== letraCorrecta) {
+        setErroresTotales(prev => prev + 1);
+        setErroresPorLetra(prev => ({
+          ...prev,
+          [posicionActual]: (prev[posicionActual] || 0) + 1
+        }));
       }
     }
     
-    const nuevaPrecision = longitud > 0 ? Math.round((correctos / longitud) * 100) : 0;
-    setPrecision(nuevaPrecision);
+    setTexto(nuevoTexto);
   };
- return (
+
+  const finalizarPrueba = () => {
+    clearInterval(intervaloRef.current);
+    const tiempoEnSegundos = tiempoTranscurrido || 1;
+    const caracteresPorMinuto = Math.round((texto.length / tiempoEnSegundos) * 60);
+    
+    setVelocidad(caracteresPorMinuto);
+    setPrecision(calcularPrecision());
+    setEstaEjecutando(false);
+    setPruebaCompletada(true);
+  };
+
+  const calcularPrecision = () => {
+    if (texto.length === 0) return 0;
+    const precisionCalculada = ((texto.length - erroresTotales) / texto.length) * 100;
+    return Math.max(0, Math.round(precisionCalculada));
+  };
+
+  const getClaseLetra = (index) => {
+    if (index >= texto.length) return 'letra-pendiente';
+    return texto[index] === textoEjemplo[index] ? 'letra-correcta' : 'letra-incorrecta';
+  };
+
+  const formatTiempo = (segundos) => {
+    const mins = Math.floor(segundos / 60);
+    const secs = segundos % 60;
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  };
+
+  return (
     <div className="mecanografia-container">
-      <h1>Mecanografía</h1>
+      <div className="header">
+        <h2>Prueba de Mecanografía</h2>
+        <div className="badge">Velocidad + Precisión</div>
+      </div>
       
       <div className="controles">
         <button 
           onClick={iniciarPrueba} 
           disabled={estaEjecutando}
-          className="boton-iniciar"
+          className="boton-principal"
         >
-          {estaEjecutando ? 'En progreso...' : 'Iniciar Prueba (1 minuto)'}
+          {estaEjecutando ? 'En progreso...' : 'Iniciar Prueba'}
         </button>
         
-        <div className="tiempo">Tiempo restante: {tiempo}s</div>
+        {estaEjecutando && (
+          <div className="temporizador">
+            Tiempo: {formatTiempo(tiempoTranscurrido)}
+          </div>
+        )}
       </div>
       
       <div className="texto-ejemplo">
         {textoEjemplo.split('').map((letra, index) => (
           <span 
             key={index} 
-            className={
-              index >= texto.length 
-                ? 'sin-escribir' 
-                : texto[index] === letra 
-                  ? 'correcto' 
-                  : 'incorrecto'
-            }
+            className={`letra ${getClaseLetra(index)}`}
+            data-error-count={erroresPorLetra[index] || null}
           >
-            {letra}
+            {letra === ' ' ? '\u00A0' : letra}
           </span>
         ))}
       </div>
@@ -105,8 +163,46 @@ useEffect(() => {
         className="area-texto"
       />
       
+      {pruebaCompletada && (
+        <div className="resultados">
+          <h3>Resultados</h3>
+          
+          <div className="metricas">
+            <div className="metrica">
+              <span className="valor">{velocidad}</span>
+              <span className="etiqueta">CPM</span>
+            </div>
+            <div className="metrica">
+              <span className="valor">{precision}%</span>
+              <span className="etiqueta">Precisión</span>
+            </div>
+            <div className="metrica">
+              <span className="valor">{erroresTotales}</span>
+              <span className="etiqueta">Errores</span>
+            </div>
+            <div className="metrica">
+              <span className="valor">{formatTiempo(tiempoTranscurrido)}</span>
+              <span className="etiqueta">Tiempo</span>
+            </div>
+          </div>
+          
+          {erroresTotales > 0 && (
+            <div className="errores-detalle">
+              <h4>Errores por letra:</h4>
+              <div className="errores-lista">
+                {Object.entries(erroresPorLetra).map(([posicion, cantidad]) => (
+                  <div key={posicion} className="error-item">
+                    <span className="letra-error">{textoEjemplo[posicion]}</span>
+                    <span className="cantidad-error">{cantidad} error{cantidad !== 1 ? 'es' : ''}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default MecanografiaApp;

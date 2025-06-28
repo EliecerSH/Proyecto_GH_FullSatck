@@ -1,0 +1,351 @@
+:root {
+  --primary: #4361ee;
+  --primary-dark: #3a56d4;
+  --secondary: #4cc9f0;
+  --accent: #f72585;
+  --success: #2ecc71;
+  --error: #e74c3c;
+  --text: #2b2d42;
+  --text-light: #6c757d;
+  --bg: #f8f9fa;
+  --card-bg: #ffffff;
+  --border: #e9ecef;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --radius: 12px;
+}
+
+/* Estilos base */
+.english-trainer-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Selección de modos */
+.mode-selection {
+  text-align: center;
+}
+
+.mode-selection h1 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.modes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.mode-card {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border);
+}
+
+.mode-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary);
+}
+
+.mode-card h3 {
+  color: var(--primary);
+  margin-top: 0;
+}
+
+/* Pantalla de juego */
+.game-screen {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.game-header h2 {
+  color: var(--primary);
+  margin: 0;
+}
+
+.game-stats {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.end-button {
+  padding: 0.5rem 1rem;
+  background: var(--error);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.end-button:hover {
+  background: #c0392b;
+}
+
+/* Ejercicios */
+.exercise {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: var(--radius);
+  margin: 1rem 0;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+/* Estilo específico para tiempos verbales */
+.exercise-tenses {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Estilos para verbos irregulares */
+.verb-forms {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 1rem auto;
+}
+
+.verb-form {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+
+.verb-form label {
+  font-weight: 500;
+  color: var(--text-light);
+  text-align: right;
+}
+
+.verb-form input {
+  padding: 0.8rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 1rem;
+}
+
+.verb-form input:disabled {
+  background: var(--bg);
+}
+
+.verb-feedback {
+  grid-column: 2;
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+  padding: 0.3rem;
+  border-radius: 4px;
+}
+
+.verb-feedback.correct {
+  background: rgba(46, 204, 113, 0.1);
+  color: var(--success);
+}
+
+.verb-feedback.incorrect {
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--error);
+}
+
+.verb-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+/* Input y botones */
+.answer-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.8rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  margin: 1rem auto;
+  display: block;
+  transition: all 0.2s;
+}
+
+.answer-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+.check-button {
+  padding: 0.8rem 1.5rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.check-button:hover:not(:disabled) {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+.check-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.next-button {
+  padding: 0.8rem 1.5rem;
+  background: var(--success);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  margin-left: 1rem;
+  transition: all 0.2s;
+}
+
+.next-button:hover {
+  background: #27ae60;
+  transform: translateY(-1px);
+}
+
+/* Feedback */
+.feedback {
+  padding: 1rem;
+  margin: 1rem auto 0;
+  border-radius: var(--radius);
+  text-align: center;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.feedback.correct {
+  background: rgba(46, 204, 113, 0.1);
+  color: var(--success);
+  border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+.feedback.incorrect {
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--error);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-light);
+}
+
+/* Estilos para tiempos verbales */
+.hint {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  margin: 0.5rem 0 1.5rem;
+  font-style: italic;
+}
+
+.tense-indicator {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  background: var(--secondary);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  margin-left: 0.8rem;
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .english-trainer-container {
+    padding: 1rem;
+    margin: 1rem;
+  }
+  
+  .modes-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .game-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  
+  .verb-form {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .verb-form label {
+    text-align: left;
+  }
+  
+  .verb-feedback {
+    grid-column: 1;
+  }
+  
+  .feedback {
+    flex-direction: column;
+  }
+  
+  .next-button {
+    margin-left: 0;
+    margin-top: 0.5rem;
+  }
+
+  .tense-indicator {
+    display: block;
+    margin: 0.5rem 0 0 0;
+    width: fit-content;
+  }
+
+  .exercise {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-stats {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .answer-input {
+    padding: 0.7rem;
+  }
+
+  .check-button, .next-button {
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+  }
+}
