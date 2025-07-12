@@ -1,11 +1,12 @@
 Kouritsu --
 
 ## Descripción  
-Kouritsu es una aplicación web todo-en-uno diseñada para maximizar la productividad mediante:  
- **Técnica Pomodoro** para gestión del tiempo  
- **Herramientas de aprendizaje** (Juegos educativos)  
- **Integraciones útiles** (Spotify, Clima)  
- **Sistema de notas rápidas**  
+Kouritsu es una aplicación web todo-en-uno diseñada para maximizar la productividad mediante:
+
+* **Técnica Pomodoro** para gestión del tiempo  
+* **Herramientas de aprendizaje** (Juegos educativos)  
+* **Integraciones útiles** (Spotify, Clima)  
+* **Sistema de notas rápidas**  
 
 Ideal para estudiantes y profesionales que buscan un espacio concentrado para trabajar/estudiar con herramientas de descanso inteligente.
 
@@ -17,12 +18,12 @@ Ideal para estudiantes y profesionales que buscan un espacio concentrado para tr
 | HTML5/CSS3/JS      | Firebase Auth    |                   |  
 
 ## Equipo  
-| Nombre             | Rol              | Contribución      |  
-|--------------------|------------------|-------------------|  
-| Francisco Aguerro  | Frontend Lead    | Pomodoro, UI      |  
-| Benjamin Guerrero  | FullStack        | Juegos educativos |  
-| Eliecer Salgado    | Backend          | Firebase, Auth    |  
-| Matias Vargaz      | UI/UX            | Diseño, CSS       |  
+| Nombre             | Rol              |
+|--------------------|------------------|
+| Francisco Aguerro  | Backend          | 
+| Benjamin Guerrero  | Frontend         | 
+| Eliecer Salgado    | Backend          | 
+| Matias Vargaz      | Frontend         | 
 
 ##  Instalación  
 1. Clonar repositorio:  
