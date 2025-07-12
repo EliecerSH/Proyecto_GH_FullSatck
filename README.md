@@ -1,4 +1,4 @@
-Kouritsu --
+# Kouritsu
 
 ## Descripción  
 Kouritsu es una aplicación web todo-en-uno diseñada para maximizar la productividad mediante:
@@ -29,20 +29,18 @@ Ideal para estudiantes y profesionales que buscan un espacio concentrado para tr
 1. Clonar repositorio:  
    ```bash
    git clone [URL-del-repositorio]
-
+   
 Instalar dependencias:
 
-bash
+```bash
 npm install
-Configurar variables de entorno (crear .env):
+```
 
-text
-REACT_APP_SPOTIFY_CLIENT_ID=tu_id
-REACT_APP_WEATHER_API_KEY=tu_key
 Iniciar aplicación:
 
-bash
+```bash
 npm start
+```
 
 Features Destacados
 Pomodoro Inteligente:
