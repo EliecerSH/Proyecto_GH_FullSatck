@@ -1,33 +1,70 @@
-# Kouritsu
-Proyecto enfocado en brindar al usuario un ecosistema que le ayude a ser mas productivo, a travez del metodo pomodoro, ademas de la implementacion de apis de entrega de informacion y aplicaciones que desarrollen las capacidades del usuario.
+Kouritsu --
 
-este proyecto fue desarrollado principalmete con React y firebase. 
+## Descripción  
+Kouritsu es una aplicación web todo-en-uno diseñada para maximizar la productividad mediante:  
+ **Técnica Pomodoro** para gestión del tiempo  
+ **Herramientas de aprendizaje** (Juegos educativos)  
+ **Integraciones útiles** (Spotify, Clima)  
+ **Sistema de notas rápidas**  
 
-los integrantes del proyecto
-- Francisco Aguerro.
-- Benjamin Guerrero.
-- Eliecer Salgado.
-- Matias Vargaz.
+Ideal para estudiantes y profesionales que buscan un espacio concentrado para trabajar/estudiar con herramientas de descanso inteligente.
 
-This is a College project about a multipurpose Web with React and a little of Tailwind CSS
+## Tecnologías  
+| Frontend           | Backend          | APIs/Servicios     |  
+|--------------------|------------------|-------------------|  
+| React              | Firebase         | Spotify API       |  
+| Tailwind CSS       | Firestore        | OpenWeatherMap    |  
+| HTML5/CSS3/JS      | Firebase Auth    |                   |  
 
-## Run
+## Equipo  
+| Nombre             | Rol              | Contribución      |  
+|--------------------|------------------|-------------------|  
+| Francisco Aguerro  | Frontend Lead    | Pomodoro, UI      |  
+| Benjamin Guerrero  | FullStack        | Juegos educativos |  
+| Eliecer Salgado    | Backend          | Firebase, Auth    |  
+| Matias Vargaz      | UI/UX            | Diseño, CSS       |  
 
-For run just:
+##  Instalación  
+1. Clonar repositorio:  
+   ```bash
+   git clone [URL-del-repositorio]
 
-```bash
-npm run dev
-```
+Instalar dependencias:
 
-## For fix run error 
-
-Delete node_modules folder and:
-
-```bash
+bash
 npm install
-npm install react-scripts
-```
+Configurar variables de entorno (crear .env):
 
+text
+REACT_APP_SPOTIFY_CLIENT_ID=tu_id
+REACT_APP_WEATHER_API_KEY=tu_key
+Iniciar aplicación:
+
+bash
+npm start
+
+Features Destacados
+Pomodoro Inteligente:
+* Temporizador configurable
+* Historial de sesiones
+* Notificaciones personalizadas
+
+Zona de Descanso Activo:
+* Juegos educativos (inglés/matemáticas)
+* Entrenador de mecanografía
+* Integración con Spotify
+
+Herramientas Rápidas:
+* Notas con sincronización en tiempo real
+* Widget del clima por ubicación
+
+
+### Mejoras adicionales que puedes incluir:
+1. **Sección "Roadmap"** 
+2. **GIFs demostrativos** 
+3. **Badges** 
+4. **Guía de contribución** 
+5. **Sistema de rating** 
 
 
 
