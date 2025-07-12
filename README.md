@@ -59,11 +59,10 @@ Herramientas Rápidas:
 
 
 ### Mejoras adicionales que puedes incluir:
-1. **Sección "Roadmap"** 
-2. **GIFs demostrativos** 
-3. **Badges** 
-4. **Guía de contribución** 
-5. **Sistema de rating** 
+1. **GIFs demostrativos** 
+2. **Badges** 
+3. **Guía de contribución** 
+4. **Sistema de rating** 
 
 
 
