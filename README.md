@@ -26,7 +26,6 @@ Delete node_modules folder and:
 ```bash
 npm install
 npm install react-scripts
-npm install react-icons
 ```
 
 
