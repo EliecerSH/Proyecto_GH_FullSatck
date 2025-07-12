@@ -9,7 +9,7 @@ los integrantes del proyecto
 - Eliecer Salgado.
 - Matias Vargaz.
 
-This is a College project abaout a multipurpose Web with React and a little of Tailwind CSS
+This is a College project about a multipurpose Web with React and a little of Tailwind CSS
 
 ## Run
 
